@@ -1,10 +1,12 @@
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 public class GameMain{
 	JFrame window;
 	JPanel screens;
 	CardLayout controller;
-
+	DatabaseManager db = new DatabaseManager();
+	User currentUser = null;
 	public GameMain() {
 		window = new JFrame("Chicken Invaders");
 		window.setSize(800,600);
@@ -24,6 +26,15 @@ public class GameMain{
 		RegisterPanel registerPanel = new RegisterPanel(this);
 		screens.add(registerPanel, "registerScreen");
 
+		FailedLoginPopup failedLoginPopup = new FailedLoginPopup(this);
+		screens.add(failedLoginPopup, "failedLoginScreen");
+		
+		FailedRegisterPopup failedRegisterPopup = new FailedRegisterPopup(this);
+		screens.add(failedRegisterPopup, "failedRegisterScreen");
+		
+		GamePanel gamePanel = new GamePanel();
+		screens.add(gamePanel, "gameScreen");
+		
 		window.add(screens);
 		window.setVisible(true);
 	}
@@ -31,7 +42,7 @@ public class GameMain{
 	public void switchScreen(String name) {
 		controller.show(screens, name);
 	}
-
+	
 	public static void main(String[] args) {
 		SwingUtilities.invokeLater(() -> new GameMain());
 	}

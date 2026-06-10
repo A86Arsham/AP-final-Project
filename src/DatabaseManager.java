@@ -35,10 +35,12 @@ public class DatabaseManager {
 
 		User newUser = new User(username, password);
 		try(BufferedWriter bw = new BufferedWriter(new FileWriter(usersFileName,true))){
+			
 			String[] user = {username, password, "0", "0", "true", "true", "true", "true"};
 			bw.write(String.join(",", user));
             bw.newLine();
-
+			
+			
 		}catch(IOException e){
 			e.printStackTrace();
 		}
@@ -71,5 +73,20 @@ public class DatabaseManager {
 		catch(FileNotFoundException e) {
 			return null;
 		}
+	}
+	
+	public boolean doesTheUserExist(String username) {
+		File usersFile = new File(usersFileName);
+		try(Scanner scn = new Scanner(usersFile)){
+			while(scn.hasNextLine()) {
+				String[] parts = scn.nextLine().split(",");
+				if(parts[0].equals(username)) {
+					return true;
+				}
+			}
+		}catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		return false;
 	}
 }

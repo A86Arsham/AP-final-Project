@@ -42,6 +42,13 @@ public class RegisterPanel extends JPanel {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				String username = usernameField.getText().trim();
+			    String password = passwordField.getText().trim();
+			    if(username.isEmpty() || password.isEmpty() || gameMain.db.doesTheUserExist(username)) {
+			    	gameMain.switchScreen("failedRegisterScreen");
+			    	return;
+			    }
+			    gameMain.currentUser = gameMain.db.registerUser(username, password);
 				gameMain.switchScreen("gameScreen");
 			}
 		});
