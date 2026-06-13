@@ -7,6 +7,7 @@ public class GameMain{
 	CardLayout controller;
 	DatabaseManager db = new DatabaseManager();
 	User currentUser = null;
+	public GamePanel gamePanel;
 	public GameMain() {
 		window = new JFrame("Chicken Invaders");
 		window.setSize(800,600);
@@ -32,7 +33,7 @@ public class GameMain{
 		FailedRegisterPopup failedRegisterPopup = new FailedRegisterPopup(this);
 		screens.add(failedRegisterPopup, "failedRegisterScreen");
 		
-		GamePanel gamePanel = new GamePanel(this);
+		gamePanel = new GamePanel(this);
 		screens.add(gamePanel, "gameScreen");
 		
 		window.add(screens);

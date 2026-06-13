@@ -21,28 +21,28 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 	ArrayList<Enemy> chickens = new ArrayList<Enemy>();
 	ArrayList<Bullet> bullets = new ArrayList<Bullet>();
 	ArrayList<Egg> eggs = new ArrayList<Egg>();
-	
+
 	int gridSpeed = 1;
-	int gridDirection = 1; 
-	
+	int gridDirection = 1;
+
 	int score = 0;
 	int currentLevel = 1;
-	
+
 	long gameStartTime;
 	long lastTakenDamageTime;
-	
+
 	GameMain gameMain;
-			
+
 	public GamePanel(GameMain gameMain) {
 		setBackground(Color.BLACK);
 		setFocusable(true);
 		addKeyListener(this);
 		playerPlane = new Plane();
 		gameTimer = new Timer(16,this);
-    	gameStartTime = System.currentTimeMillis(); 
+    	gameStartTime = System.currentTimeMillis();
 		lastTakenDamageTime = System.currentTimeMillis();
 		this.gameMain = gameMain;
-		
+
 		addComponentListener(new ComponentAdapter() {
 		    @Override
 		    public void componentShown(ComponentEvent e) {
@@ -84,7 +84,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 				}
 			}
 		}
-		
+
 		boolean hitEdge = false;
 		for(Enemy chicken : chickens) {
 			if(chicken.isAlive()) {
@@ -105,9 +105,11 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 		}
 		if(System.currentTimeMillis() - gameStartTime > 2000) {
 			for(Enemy chicken : chickens) {
-				Egg egg = chicken.eggDrop();
-				if(egg!=null) {
-					eggs.add(egg);
+				if(chicken.isAlive() && isOnFront(chicken, chickens)) {
+					Egg egg = chicken.eggDrop();
+					if(egg!=null) {
+						eggs.add(egg);
+					}
 				}
 			}
 		}
@@ -129,12 +131,12 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 				lastTakenDamageTime = System.currentTimeMillis();
 			}
 		}
-		
+
 		for (Bullet b : bullets) {
 		    b.move();
 		}
-		
-		
+
+
 		repaint();
 	}
 
@@ -151,7 +153,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
         for(Egg egg : eggs) {
         	egg.draw(brush);
         }
-        
+
         brush.setColor(Color.WHITE);
         brush.setFont(new Font("Arial", Font.BOLD, 18));
         brush.drawString("Score: " + score, 10, 20);
@@ -172,9 +174,9 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
         		int bulletX = playerPlane.getX() + (playerPlane.getWidth() / 2);
         		int bulletY = playerPlane.getY();
         		bullets.add(new Bullet(bulletX, bulletY));
-                lastShotTime = currentTime; 
+                lastShotTime = currentTime;
             }
-           
+
         }
     }
 
@@ -203,4 +205,25 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 	    }
 	}
 
+	public boolean isOnFront(Enemy chicken,ArrayList<Enemy> enemies) {
+		boolean is = true;
+		for(Enemy enemy : enemies) {
+			if(enemy.isAlive() && chicken.getX() == enemy.getX() && chicken.getY() < enemy.getY()) {
+				is = false;
+			}
+		}
+		return is;
+	}
+
+	public void resetGame() {
+		score = 0;
+		currentLevel = 1;
+		playerPlane.setLives(3);
+		playerPlane.respawn();
+		bullets.clear();
+		eggs.clear();
+		gameStartTime = System.currentTimeMillis();
+		spawnGrid();
+		gameTimer.start();
+	}
 }

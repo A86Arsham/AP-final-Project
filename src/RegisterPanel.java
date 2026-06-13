@@ -44,6 +44,8 @@ public class RegisterPanel extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				String username = usernameField.getText().trim();
 			    String password = passwordField.getText().trim();
+			    usernameField.setText("");
+			    passwordField.setText("");
 			    if(username.isEmpty() || password.isEmpty() || gameMain.db.doesTheUserExist(username)) {
 			    	gameMain.switchScreen("failedRegisterScreen");
 			    	return;
@@ -53,5 +55,7 @@ public class RegisterPanel extends JPanel {
 			}
 		});
 		add(registerButton);
+		
+		
 	}
 }

@@ -3,7 +3,8 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 public class MainMenu extends JPanel{
-	private GameMain gameMain; 		public MainMenu(GameMain gameMain) {
+	private GameMain gameMain; 		
+	public MainMenu(GameMain gameMain) {
 			this.gameMain = gameMain;
 
 			JPanel mainPanel = new JPanel();

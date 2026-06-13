@@ -46,7 +46,11 @@ public class LoginPanel extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				String username = usernameField.getText();
 				String password = passwordField.getText();
+				usernameField.setText("");
+				passwordField.setText("");
+				
 				if((gameMain.currentUser = gameMain.db.loginUser(username, password))!=null) {
+					gameMain.gamePanel.resetGame(); 
 					gameMain.switchScreen("gameScreen");
 				}
 				else {
