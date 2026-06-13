@@ -32,7 +32,7 @@ public class GameMain{
 		FailedRegisterPopup failedRegisterPopup = new FailedRegisterPopup(this);
 		screens.add(failedRegisterPopup, "failedRegisterScreen");
 		
-		GamePanel gamePanel = new GamePanel();
+		GamePanel gamePanel = new GamePanel(this);
 		screens.add(gamePanel, "gameScreen");
 		
 		window.add(screens);
