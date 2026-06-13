@@ -9,12 +9,14 @@ public abstract class Enemy {
 	private int height;
 	private int health;
 	private boolean isAlive;
+	private long lastEggTime = 0;
+	private int eggCooldown = 3000;
 
 	public Enemy(int x, int y) {
 		this.x = x;
 		this.y = y;
-		this.width = 40;
-		this.height = 40;
+		this.width = 30;
+		this.height = 30;
 		this.isAlive = true;
 	}
 
@@ -67,6 +69,10 @@ public abstract class Enemy {
 		this.isAlive = isAlive;
 	}
 
+	public void setEggCooldown(int ms) {
+	    this.eggCooldown = ms;
+	}
+
 	public void takeDamage() {
 		health--;
 		if(health<=0) {
@@ -84,6 +90,16 @@ public abstract class Enemy {
 	public Rectangle getBounds() {
 		return new Rectangle(x,y,width,height);
 	}
+
+	public Egg eggDrop() {
+		long now = System.currentTimeMillis();
+		if(now - lastEggTime >= eggCooldown) {
+			lastEggTime = now;
+			return new Egg(x + width/2, y + height);
+		}
+		return null;
+	}
+
 
 
 }

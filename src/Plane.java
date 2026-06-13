@@ -11,8 +11,8 @@ public class Plane {
     private int lives;
 
     public Plane() {
-        this.width = 50;
-        this.height = 50;
+        this.width = 40;
+        this.height = 40;
         this.x = 375;
         this.y = 500;
         this.speed = 5;
@@ -28,7 +28,7 @@ public class Plane {
         if (x < 0) x = 0;
         if (x > screenWidth - width) x = screenWidth - width;
 
-        if (y < 0) y = 0;
+        if (y < screenHeight / 2) y = screenHeight / 2;
         if (y > screenHeight - height) y = screenHeight - height;
     }
 
