@@ -36,6 +36,7 @@ public class LoginPanel extends JPanel {
 
 		JButton loginButton = new JButton("Login");
 		loginButton.setFont(new Font("Arial", Font.BOLD, 24));
+		loginButton.setOpaque(true);
 		loginButton.setBackground(new Color(0, 120, 215));
 		loginButton.setForeground(Color.WHITE);
 		loginButton.setBorderPainted(false);

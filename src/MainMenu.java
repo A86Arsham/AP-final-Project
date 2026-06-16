@@ -24,6 +24,7 @@ public class MainMenu extends JPanel{
 
 			JButton newGameButton = new JButton("New Game");
 			newGameButton.setFont(new Font("Arial", Font.BOLD, 24));
+			newGameButton.setOpaque(true);
 			newGameButton.setBackground(new Color(0, 120, 215));
 			newGameButton.setForeground(Color.WHITE);
 			newGameButton.setBorderPainted(false);
@@ -32,6 +33,7 @@ public class MainMenu extends JPanel{
 
 			JButton highScoresButton = new JButton("High Scores");
 			highScoresButton.setFont(new Font("Arial", Font.BOLD, 24));
+			highScoresButton.setOpaque(true);
 			highScoresButton.setBackground(new Color(0, 120, 215));
 			highScoresButton.setForeground(Color.WHITE);
 			highScoresButton.setBorderPainted(false);
@@ -40,6 +42,7 @@ public class MainMenu extends JPanel{
 
 			JButton settingsButton = new JButton("Settings");
 			settingsButton.setFont(new Font("Arial", Font.BOLD, 24));
+			settingsButton.setOpaque(true);
 			settingsButton.setBackground(new Color(0, 120, 215));
 			settingsButton.setForeground(Color.WHITE);
 			settingsButton.setBorderPainted(false);
@@ -48,6 +51,7 @@ public class MainMenu extends JPanel{
 
 			JButton howToPlayButton =  new JButton("How to Play");
 			howToPlayButton.setFont(new Font("Arial", Font.BOLD, 24));
+			howToPlayButton.setOpaque(true);
 			howToPlayButton.setBackground(new Color(0, 120, 215));
 			howToPlayButton.setForeground(Color.WHITE);
 			howToPlayButton.setBorderPainted(false);
@@ -56,6 +60,7 @@ public class MainMenu extends JPanel{
 
 			JButton exitButton = new JButton("Exit");
 			exitButton.setFont(new Font("Arial", Font.BOLD, 24));
+			exitButton.setOpaque(true);
 			exitButton.setBackground(new Color(0, 120, 215));
 			exitButton.setForeground(Color.WHITE);
 			exitButton.setBorderPainted(false);
