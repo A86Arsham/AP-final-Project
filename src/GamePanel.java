@@ -18,7 +18,8 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 	long lastShotTime = 0;
 	Timer gameTimer;
 	Plane playerPlane;
-	ArrayList<Enemy> chickens = new ArrayList<Enemy>();
+//	ArrayList<Enemy> chickens = new ArrayList<Enemy>();
+	ArrayList<Cell> grid = new ArrayList<>();
 	ArrayList<Bullet> bullets = new ArrayList<Bullet>();
 	ArrayList<Egg> eggs = new ArrayList<Egg>();
 
@@ -59,22 +60,27 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 	public void actionPerformed(ActionEvent e) {
 		playerPlane.move(leftPressed, rightPressed, upPressed, downPressed, getWidth(), getHeight());
 
-		for (Enemy chicken : chickens) {
-	        if (chicken.isAlive() && playerPlane.getBounds().intersects(chicken.getBounds())) {
+		for(Cell cell : grid){
+			Enemy chicken = cell.getOccChicken();
+			if(chicken == null || !chicken.isAlive()){
+				if(cell.getCounter() > 0){
+					Enemy newChicken = new NormalEnemy(2, cell.getX(), cell.getY());
+					cell.setOccChicken(newChicken);
+					cell.decreaseCounter();
+				}
+				else{
+					cell.setOccChicken(null);
+				}
+			}
+		}
 
-	            int currentLives = playerPlane.getLives();
-	            playerPlane.setLives(currentLives - 1);
-	            playerPlane.respawn();
-
-	            chicken.setAlive(false);
-	        }
-	    }
 		for (Bullet b : bullets) {
 			if(!b.isVisible()) {
 				continue;
 			}
-			for(Enemy chicken : chickens) {
-				if(chicken.isAlive() && b.getBounds().intersects(chicken.getBounds())) {
+			for(Cell cell : grid) {
+				Enemy chicken = cell.getOccChicken();
+				if(chicken != null && chicken.isAlive() && b.getBounds().intersects(chicken.getBounds())) {
 					chicken.takeDamage();
 					b.destroy();
 					if (!chicken.isAlive()) {
@@ -86,8 +92,9 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 		}
 
 		boolean hitEdge = false;
-		for(Enemy chicken : chickens) {
-			if(chicken.isAlive()) {
+		for(Cell cell : grid) {
+			Enemy chicken = cell.getOccChicken();
+			if(chicken != null && chicken.isAlive()) {
 				if(chicken.getX()<=0 || chicken.getX() + chicken.getWidth() >= getWidth()) {
 					hitEdge = true;
 					break;
@@ -96,16 +103,17 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 		}
 		if(hitEdge) {
 			gridDirection *= -1;
-			for(Enemy chicken : chickens) {
-				chicken.setY(chicken.getY() + 20);
+			for(Cell cell : grid) {
+				cell.shift(0, 20);
 			}
 		}
-		for(Enemy chicken : chickens) {
-			chicken.setX(chicken.getX() + gridDirection*gridSpeed);
+		for(Cell cell : grid) {
+			cell.shift(gridDirection*gridSpeed, 0);
 		}
 		if(System.currentTimeMillis() - gameStartTime > 2000) {
-			for(Enemy chicken : chickens) {
-				if(chicken.isAlive() && isOnFront(chicken, chickens)) {
+			for(Cell cell : grid) {
+				Enemy chicken = cell.getOccChicken();
+				if(chicken != null && chicken.isAlive() && isOnFront(cell, grid)) {
 					Egg egg = chicken.eggDrop();
 					if(egg!=null) {
 						eggs.add(egg);
@@ -144,9 +152,12 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 	public void paintComponent(Graphics brush) {
 		super.paintComponent(brush);
         playerPlane.draw(brush);
-        for(Enemy chicken : chickens) {
-        	chicken.draw(brush);
-        }
+        for(Cell cell : grid){
+			Enemy chicken = cell.getOccChicken();
+			if(chicken != null && chicken.isAlive()){
+				chicken.draw(brush);
+			}
+		}
         for(Bullet b : bullets) {
         	b.draw(brush);
         }
@@ -193,26 +204,29 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
     public void keyTyped(KeyEvent e) {}
 
 	public void spawnGrid() {
-	    chickens.clear();
+	    grid.clear();
 
 	    for (int row = 0; row < 5; row++) {
 	        for (int col = 0; col < 8; col++) {
 	            int chickenX = 115 + (col * 70);
 	            int chickenY = 40 + (row * 45);
 
-	            chickens.add(new NormalEnemy(2,chickenX, chickenY));
+				Cell cell = new Cell(row, col, chickenX, chickenY, 2);
+				cell.setOccChicken(new NormalEnemy(2, chickenX, chickenY));
+				cell.decreaseCounter();
+				grid.add(cell);
 	        }
 	    }
 	}
 
-	public boolean isOnFront(Enemy chicken,ArrayList<Enemy> enemies) {
-		boolean is = true;
-		for(Enemy enemy : enemies) {
-			if(enemy.isAlive() && chicken.getX() == enemy.getX() && chicken.getY() < enemy.getY()) {
-				is = false;
+	public boolean isOnFront(Cell targetCell,ArrayList<Cell> grid) {
+		for(Cell otherCell : grid) {
+			Enemy chicken = otherCell.getOccChicken();
+			if(chicken != null && chicken.isAlive() && targetCell.getCol() == otherCell.getCol() && targetCell.getRow() < otherCell.getRow()) {
+				return false;
 			}
 		}
-		return is;
+		return true;
 	}
 
 	public void resetGame() {

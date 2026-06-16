@@ -4,7 +4,7 @@ public class Cell {
     private int x;
     private int y;
     private int counter;
-    private Enemy occ_chicken;
+    private Enemy occChicken;
 
     public Cell(int row, int col, int x, int y, int counter){
         this.row = row;
@@ -12,7 +12,7 @@ public class Cell {
         this.x = x;
         this.y = y;
         this.counter = counter;
-        this.occ_chicken = null;
+        this.occChicken = null;
     }
 
     public int getRow(){
@@ -34,9 +34,19 @@ public class Cell {
         this.counter--;
     }
     public Enemy getOccChicken(){
-        return this.occ_chicken;
+        return this.occChicken;
     }
     public void setOccChicken(Enemy chicken){
-        this.occ_chicken = chicken;
+        this.occChicken = chicken;
+    }
+
+    public void shift(int dx, int dy){
+        this.x += dx;
+        this.y += dy;
+
+        if(this.occChicken!=null && this.occChicken.isAlive()){
+            this.occChicken.setX(this.occChicken.getX() + dx);
+            this.occChicken.setY(this.occChicken.getY() + dy);
+        }
     }
 }
