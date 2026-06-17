@@ -62,74 +62,109 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 
 		for(Cell cell : grid){
 			Enemy chicken = cell.getOccChicken();
-			if(chicken == null || !chicken.isAlive()){
+			if(chicken!=null && !chicken.isAlive() && !cell.isTheChickenRespawning()){
+				cell.decreaseCounter();
 				if(cell.getCounter() > 0){
-					Enemy newChicken = new NormalEnemy(2, cell.getX(), cell.getY());
-					cell.setOccChicken(newChicken);
-					cell.decreaseCounter();
+					int spawnX;
+					if (Math.random() < 0.5) {
+    					spawnX = 0;
+					} 
+					else {
+    					spawnX = 750;
+					}
+					int spawnY = 0;
+					NormalEnemy replacement = new NormalEnemy(2, spawnX, spawnY);
+					replacement.setMovingToCell(true);
+            		cell.setOccChicken(replacement);
+					cell.setChickenIsRespawning(true);
 				}
 				else{
 					cell.setOccChicken(null);
 				}
 			}
+			chicken = cell.getOccChicken();
+			if (chicken != null && cell.isTheChickenRespawning()) {
+				chicken.moveTowardsCell(cell.getX(), cell.getY());
+        		if (!chicken.isMovingToCell()) {
+            		cell.setChickenIsRespawning(false);
+        		}
+    		}
+			// if(chicken == null || !chicken.isAlive()){
+			// 	if(cell.getCounter() > 0){
+			// 		Enemy newChicken = new NormalEnemy(2, cell.getX(), cell.getY());
+			// 		cell.setOccChicken(newChicken);
+			// 		cell.decreaseCounter();
+			// 	}
+			// 	else{
+			// 		cell.setOccChicken(null);
+			// 	}
+			// }
 		}
 
-		for (Bullet b : bullets) {
-			if(!b.isVisible()) {
+		for (int i = 0; i < bullets.size(); i++) {
+    		Bullet b = (Bullet) bullets.get(i);
+			if (!b.isVisible()) {
 				continue;
 			}
-			for(Cell cell : grid) {
+			for (int j = 0; j < grid.size(); j++) {
+				Cell cell = (Cell) grid.get(j);
 				Enemy chicken = cell.getOccChicken();
-				if(chicken != null && chicken.isAlive() && b.getBounds().intersects(chicken.getBounds())) {
+				if (chicken != null && chicken.isAlive() && b.getBounds().intersects(chicken.getBounds())) {
 					chicken.takeDamage();
 					b.destroy();
 					if (!chicken.isAlive()) {
-				        score += 10;
-				    }
+						score += 10;
+					}
 					break;
 				}
 			}
 		}
+		
 
 		boolean hitEdge = false;
-		for(Cell cell : grid) {
+		for (int i = 0; i < grid.size(); i++) {
+			Cell cell = (Cell) grid.get(i);
 			Enemy chicken = cell.getOccChicken();
-			if(chicken != null && chicken.isAlive()) {
-				if(chicken.getX()<=0 || chicken.getX() + chicken.getWidth() >= getWidth()) {
+			if (chicken != null && chicken.isAlive()) {
+				if (chicken.getX() <= 0 || chicken.getX() + chicken.getWidth() >= getWidth()) {
 					hitEdge = true;
 					break;
 				}
 			}
 		}
-		if(hitEdge) {
+		if (hitEdge) {
 			gridDirection *= -1;
-			for(Cell cell : grid) {
+			for (int i = 0; i < grid.size(); i++) {
+				Cell cell = (Cell) grid.get(i);
 				cell.shift(0, 20);
 			}
 		}
-		for(Cell cell : grid) {
-			cell.shift(gridDirection*gridSpeed, 0);
+		for (int i = 0; i < grid.size(); i++) {
+			Cell cell = (Cell) grid.get(i);
+			cell.shift(gridDirection * gridSpeed, 0);
 		}
-		if(System.currentTimeMillis() - gameStartTime > 2000) {
-			for(Cell cell : grid) {
+		if (System.currentTimeMillis() - gameStartTime > 2000) {
+			for (int i = 0; i < grid.size(); i++) {
+				Cell cell = (Cell) grid.get(i);
 				Enemy chicken = cell.getOccChicken();
-				if(chicken != null && chicken.isAlive() && isOnFront(cell, grid)) {
+				if (chicken != null && chicken.isAlive() && !chicken.isMovingToCell() && isOnFront(cell, grid)) {
 					Egg egg = chicken.eggDrop();
-					if(egg!=null) {
+					if (egg != null) {
 						eggs.add(egg);
 					}
 				}
-			}
 		}
-		for(Egg egg : eggs) {
+		}	
+		for (int i = 0; i < eggs.size(); i++) {
+    		Egg egg = (Egg) eggs.get(i);
 			egg.move();
-			if(egg.getY()>getHeight()) {
+			if (egg.getY() > getHeight()) {
 				egg.destroy();
 			}
-			if(egg.isVisible() && egg.getBounds().intersects(playerPlane.getBounds()) && (System.currentTimeMillis() - lastTakenDamageTime>5000)) {
+			if (egg.isVisible() && egg.getBounds().intersects(playerPlane.getBounds()) && (System.currentTimeMillis() - lastTakenDamageTime > 5000)) {
 				egg.destroy();
 				playerPlane.setLives(playerPlane.getLives() - 1);
-				if(playerPlane.getLives() <= 0) {
+				if (playerPlane.getLives() <= 0) {
 					gameTimer.stop();
 					JOptionPane.showMessageDialog(this, "GAME OVER! The Chickens Invaded!\nFinal Score: " + score);
 					gameMain.switchScreen("menuScreen");
@@ -138,11 +173,12 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 				playerPlane.respawn();
 				lastTakenDamageTime = System.currentTimeMillis();
 			}
-		}
+		}	
 
-		for (Bullet b : bullets) {
-		    b.move();
-		}
+		for (int i = 0; i < bullets.size(); i++) {
+    		Bullet b = (Bullet) bullets.get(i);
+    		b.move();
+		}	
 
 
 		repaint();
@@ -213,7 +249,6 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 
 				Cell cell = new Cell(row, col, chickenX, chickenY, 2);
 				cell.setOccChicken(new NormalEnemy(2, chickenX, chickenY));
-				cell.decreaseCounter();
 				grid.add(cell);
 	        }
 	    }

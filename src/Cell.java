@@ -5,6 +5,7 @@ public class Cell {
     private int y;
     private int counter;
     private Enemy occChicken;
+    private boolean chickenIsRespawning;
 
     public Cell(int row, int col, int x, int y, int counter){
         this.row = row;
@@ -13,6 +14,7 @@ public class Cell {
         this.y = y;
         this.counter = counter;
         this.occChicken = null;
+        this.chickenIsRespawning = false;
     }
 
     public int getRow(){
@@ -39,12 +41,18 @@ public class Cell {
     public void setOccChicken(Enemy chicken){
         this.occChicken = chicken;
     }
+    public void setChickenIsRespawning(boolean tF){
+        this.chickenIsRespawning = tF;
+    }
+    public boolean isTheChickenRespawning(){
+        return this.chickenIsRespawning;
+    }
 
     public void shift(int dx, int dy){
         this.x += dx;
         this.y += dy;
 
-        if(this.occChicken!=null && this.occChicken.isAlive()){
+        if(this.occChicken!=null && this.occChicken.isAlive() && !this.getOccChicken().isMovingToCell()){
             this.occChicken.setX(this.occChicken.getX() + dx);
             this.occChicken.setY(this.occChicken.getY() + dy);
         }
