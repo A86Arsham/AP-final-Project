@@ -179,7 +179,8 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
     		Bullet b = (Bullet) bullets.get(i);
     		b.move();
 		}	
-
+		
+		
 
 		repaint();
 	}

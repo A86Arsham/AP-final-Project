@@ -14,6 +14,8 @@ public abstract class Enemy {
 
 	private boolean movingToCell = false;
 
+	public abstract int getScoreValue();
+
 	public Enemy(int x, int y) {
 		this.x = x;
 		this.y = y;

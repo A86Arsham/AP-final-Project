@@ -9,11 +9,23 @@ public class Egg {
 	private int height = 12;
 	private int speed = 4;
 	private boolean visible;
+	private int dx;
+	private int dy;
 
 	public Egg(int x, int y) {
 		this.x = x;
 		this.y = y;
 		this.visible = true;
+		this.dx = 0;
+		this.dy = 0;
+	}
+
+	public Egg(int x, int y, int dx, int dy){
+		this.x = x;
+		this.y = y;
+		this.visible = true;
+		this.dx = dx * speed;
+		this.dy = dy * speed;
 	}
 
 	public int getY() {
@@ -21,7 +33,8 @@ public class Egg {
 	}
 
 	public void move() {
-		this.y += this.speed;
+		this.y += this.dy;
+		this.x += this.dx;
 	}
 
 	public void draw(Graphics brush) {
