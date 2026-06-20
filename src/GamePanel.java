@@ -34,6 +34,8 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 
 	GameMain gameMain;
 
+	Boss currentBoss = null;
+
 	LevelConfig[] levels = {
 		new LevelConfig(new String[]{"Normal"}, 2, 1.0, 20, 3000, false),
 		new LevelConfig(new String[]{"Normal", "Fast"}, 2, 1.5, 20, 2000, false),
@@ -191,7 +193,27 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
     		b.move();
 		}	
 		
-		
+		if(!levels[currentLevel - 1].isBossLevel && grid.size() > 0 && isLevelComplete()){
+			score += 200;
+			currentLevel++;
+
+			spawnGrid();
+		}
+		if(levels[currentLevel - 1].isBossLevel && currentBoss != null && !currentBoss.isAlive()){
+			if(currentLevel == 4){
+				score += 500;
+			}
+			else if(currentLevel == 8){
+				score += 1000;
+				gameTimer.stop();
+				JOptionPane.showMessageDialog(this, "You win! Final Score: " + score);
+				gameMain.switchScreen("menuScreen");
+				return;
+			}
+			currentLevel++;
+			currentBoss = null;
+			spawnGrid();
+		}
 
 		repaint();
 	}
@@ -328,5 +350,21 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 		else{
 			throw new IllegalArgumentException("Unknown enemy type: " + type);
 		}
+	}
+
+	private boolean isLevelComplete(){
+		for(Cell cell : grid){
+			Enemy chicken = cell.getOccChicken();
+			if(chicken != null && chicken.isAlive()){
+				return false;
+			}
+			if(cell.isTheChickenRespawning()){
+				return false;
+			}
+			if(cell.getCounter() > 0){
+				return false;
+			}
+		}
+		return true;
 	}
 }

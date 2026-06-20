@@ -84,10 +84,10 @@ public abstract class Enemy {
 		}
 	}
 
-	public void draw(Graphics enemy_model) {
+	public void draw(Graphics brush) {
 		if(isAlive) {
-			enemy_model.setColor(Color.RED);
-			enemy_model.fillRect((int)x, (int)y, width, height);
+			brush.setColor(Color.RED);
+			brush.fillRect((int)x, (int)y, width, height);
 		}
 	}
 
