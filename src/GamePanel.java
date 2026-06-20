@@ -23,7 +23,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 	ArrayList<Bullet> bullets = new ArrayList<Bullet>();
 	ArrayList<Egg> eggs = new ArrayList<Egg>();
 
-	int gridSpeed = 1;
+	double gridSpeed = 1.0;
 	int gridDirection = 1;
 
 	int score = 0;
@@ -33,6 +33,17 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 	long lastTakenDamageTime;
 
 	GameMain gameMain;
+
+	LevelConfig[] levels = {
+		new LevelConfig(new String[]{"Normal"}, 2, 1.0, 20, 3000, false),
+		new LevelConfig(new String[]{"Normal", "Fast"}, 2, 1.5, 20, 2000, false),
+		new LevelConfig(new String[]{"Normal", "Zigzag"}, 3, 2.0, 25, 1500, false),
+		new LevelConfig(null, 0, 1.5, 0, 1500, true),
+		new LevelConfig(new String[]{"Shooter", "Fast"}, 3, 2.5, 25, 1000, false),
+		new LevelConfig(new String[]{"Zigzag", "Shooter"}, 4, 3.0, 30, 800, false),
+		new LevelConfig(new String[]{"Normal", "Fast", "Zigzag", "Shooter"}, 4, 3.5, 30, 700, false),
+		new LevelConfig(null, 0, 2.0, 0, 1000, true)
+	};
 
 	public GamePanel(GameMain gameMain) {
 		setBackground(Color.BLACK);
@@ -242,14 +253,25 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 
 	public void spawnGrid() {
 	    grid.clear();
+		eggs.clear();
+		bullets.clear();
+		LevelConfig config = levels[currentLevel - 1];
+
+		if(config.isBossLevel){
+			return;
+		}
+		this.gridSpeed = config.gridSpeed;
 
 	    for (int row = 0; row < 5; row++) {
 	        for (int col = 0; col < 8; col++) {
 	            int chickenX = 115 + (col * 70);
 	            int chickenY = 40 + (row * 45);
+				
+				Enemy enemy = createEnemy(config.enemyTypes, config.cellHealth, chickenX, chickenY, col);
+				enemy.setEggCooldown(config.eggCooldown);
 
-				Cell cell = new Cell(row, col, chickenX, chickenY, 2);
-				cell.setOccChicken(new NormalEnemy(2, chickenX, chickenY));
+				Cell cell = new Cell(row, col, chickenX, chickenY, config.cellHealth);
+				cell.setOccChicken(enemy);
 				grid.add(cell);
 	        }
 	    }
@@ -275,5 +297,36 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 		gameStartTime = System.currentTimeMillis();
 		spawnGrid();
 		gameTimer.start();
+	}
+
+	private Enemy createEnemy(String[] types, int health, int x, int y, int col){
+		String type;
+		if(types.length == 1){
+			type = types[0];
+		}
+		else if(types.length == 2){
+			int index = col % 2;
+			type = types[index];
+		}
+		else{
+			int index = col % 3;
+			type = types[index];
+		}
+
+		if(type.equals("Normal")){
+			return new NormalEnemy(health, x, y);
+		}
+		else if(type.equals("Fast")){
+			return new FastEnemy(health, x, y);
+		}
+		else if(type.equals("Zigzag")){
+			return new ZigzagEnemy(health, x, y);
+		}
+		else if(type.equals("Shooter")){
+			return new ShooterEnemy(health, x, y);
+		}
+		else{
+			throw new IllegalArgumentException("Unknown enemy type: " + type);
+		}
 	}
 }

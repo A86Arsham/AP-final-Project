@@ -1,8 +1,8 @@
 public class Cell {
     private int row;
     private int col;
-    private int x;
-    private int y;
+    private double x;
+    private double y;
     private int counter;
     private Enemy occChicken;
     private boolean chickenIsRespawning;
@@ -24,10 +24,10 @@ public class Cell {
         return this.col;
     }
     public int getX(){
-        return this.x;
+        return (int)this.x;
     }
     public int getY(){
-        return this.y;
+        return (int)this.y;
     }
     public int getCounter(){
         return this.counter;
@@ -48,7 +48,7 @@ public class Cell {
         return this.chickenIsRespawning;
     }
 
-    public void shift(int dx, int dy){
+    public void shift(double dx, double dy){
         this.x += dx;
         this.y += dy;
 
