@@ -17,7 +17,7 @@ public class Egg {
 		this.y = y;
 		this.visible = true;
 		this.dx = 0;
-		this.dy = 0;
+		this.dy = speed;
 	}
 
 	public Egg(int x, int y, int dx, int dy){
@@ -26,6 +26,14 @@ public class Egg {
 		this.visible = true;
 		this.dx = dx * speed;
 		this.dy = dy * speed;
+	}
+
+	public Egg(int x, int y, int dx, int dy, int speed){
+		this.x = x;
+		this.y = y;
+		this.dx = dx * speed;
+		this.dy = dy * speed;
+		this.visible = true;
 	}
 
 	public int getY() {
