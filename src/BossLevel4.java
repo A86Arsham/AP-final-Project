@@ -6,6 +6,11 @@ public class BossLevel4 extends Boss {
     private long lastAttackTime = 0;
     private int attackCooldown = 1500;
 
+    private double currentY = getY();
+    private double verticalSpeed = 0.5;
+    private int verticalDirection = 1;
+    private double startY = getY();
+
     public BossLevel4(){
         super(350, 50, 100, 100, 50, 1.5);
     }
@@ -33,5 +38,16 @@ public class BossLevel4 extends Boss {
     public void drawBoss(Graphics brush){
         brush.setColor(Color.YELLOW);
         brush.fillRect(getX(), getY(), getWidth(), getHeight());
+    }
+
+    @Override
+    public void move(int screenWidth){
+        super.move(screenWidth);
+
+        currentY += verticalSpeed * verticalDirection;
+        if(currentY > (startY + 30) || currentY < startY){
+            verticalDirection *= -1;
+        }
+        setY(currentY);
     }
 }

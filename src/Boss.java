@@ -30,6 +30,9 @@ public abstract class Boss {
     public int getY(){
         return (int)this.y;
     }
+    public void setY(double newY){
+        this.y = newY;
+    }
     public int getWidth(){
         return this.width;
     }
