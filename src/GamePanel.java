@@ -73,6 +73,20 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 	public void actionPerformed(ActionEvent e) {
 		playerPlane.move(leftPressed, rightPressed, upPressed, downPressed, getWidth(), getHeight());
 
+		if(currentBoss != null && currentBoss.isAlive()){
+			currentBoss.move(getWidth());
+
+			ArrayList<Egg> bossEggs = currentBoss.generateEggs();
+			for(int i=0; i<bossEggs.size(); i++){
+				eggs.add(bossEggs.get(i));
+			}
+
+			if(currentBoss.getBounds().intersects(playerPlane.getBounds())){
+				playerPlane.setLives(playerPlane.getLives() - 1);
+				playerPlane.respawn();
+			}
+		}
+
 		for(Cell cell : grid){
 			Enemy chicken = cell.getOccChicken();
 			if(chicken!=null && !chicken.isAlive() && !cell.isTheChickenRespawning()){
@@ -130,7 +144,16 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 					}
 					break;
 				}
+				
 			}
+
+			if(currentBoss != null && currentBoss.isAlive()){
+				if(b.isVisible() && b.getBounds().intersects(currentBoss.getBounds())){
+					currentBoss.takeDamage(1);
+					b.destroy();
+				}
+			}
+			
 		}
 		
 
@@ -228,6 +251,10 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 				chicken.draw(brush);
 			}
 		}
+		if(currentBoss != null && currentBoss.isAlive()){
+			currentBoss.drawBoss(brush);
+			currentBoss.drawHealthBar(brush);
+		}
         for(Bullet b : bullets) {
         	b.draw(brush);
         }
@@ -280,6 +307,12 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 		LevelConfig config = levels[currentLevel - 1];
 
 		if(config.isBossLevel){
+			if(currentLevel == 4){
+				currentBoss = new BossLevel4();
+			}
+			else if(currentLevel == 8){
+				currentBoss = new BossLevel8();
+			}
 			return;
 		}
 		this.gridSpeed = config.gridSpeed;
@@ -319,6 +352,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 		gameStartTime = System.currentTimeMillis();
 		spawnGrid();
 		gameTimer.start();
+		currentBoss = null;
 	}
 
 	private Enemy createEnemy(String[] types, int health, int x, int y, int col){
