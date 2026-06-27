@@ -19,4 +19,9 @@ public class FastEnemy extends Enemy {
             brush.fillRect(getX(), getY(), getWidth(), getHeight());
         }
     }
+
+    @Override
+    public double getSpeedMultiplier(){
+        return 2.0;
+    }
 }

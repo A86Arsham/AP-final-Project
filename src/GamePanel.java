@@ -36,6 +36,8 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 
 	Boss currentBoss = null;
 
+	long lastEdgeHitTime = 0;
+
 	LevelConfig[] levels = {
 		new LevelConfig(new String[]{"Normal"}, 2, 1.0, 20, 3000, false),
 		new LevelConfig(new String[]{"Normal", "Fast"}, 2, 1.5, 20, 2000, false),
@@ -83,7 +85,32 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 
 			if(currentBoss.getBounds().intersects(playerPlane.getBounds())){
 				playerPlane.setLives(playerPlane.getLives() - 1);
+				if(playerPlane.getLives() <= 0){
+					gameTimer.stop();
+					JOptionPane.showMessageDialog(this, "GAME OVER! Final Score: " + score);
+            		gameMain.switchScreen("menuScreen");
+					return;
+				}
 				playerPlane.respawn();
+			}
+		}
+
+		for (Cell cell : grid) {
+			Enemy chicken = cell.getOccChicken();
+			if (chicken != null && chicken.isAlive() && chicken.getBounds().intersects(playerPlane.getBounds())) {
+				
+				if (System.currentTimeMillis() - lastTakenDamageTime > 2000) { 
+					playerPlane.setLives(playerPlane.getLives() - 1);
+					lastTakenDamageTime = System.currentTimeMillis();
+					playerPlane.respawn();
+					
+					if (playerPlane.getLives() <= 0) {
+						gameTimer.stop();
+						JOptionPane.showMessageDialog(this, "GAME OVER! The Chickens Invaded!\nFinal Score: " + score);
+						gameMain.switchScreen("menuScreen");
+						return;
+					}
+				}
 			}
 		}
 
@@ -100,7 +127,8 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
     					spawnX = 750;
 					}
 					int spawnY = 0;
-					NormalEnemy replacement = new NormalEnemy(2, spawnX, spawnY);
+					LevelConfig config = levels[currentLevel-1];
+					Enemy replacement = createEnemy(config.enemyTypes, config.cellHealth, spawnX, spawnY, cell.getCol());
 					replacement.setMovingToCell(true);
             		cell.setOccChicken(replacement);
 					cell.setChickenIsRespawning(true);
@@ -158,26 +186,49 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 		
 
 		boolean hitEdge = false;
-		for (int i = 0; i < grid.size(); i++) {
-			Cell cell = (Cell) grid.get(i);
-			Enemy chicken = cell.getOccChicken();
-			if (chicken != null && chicken.isAlive()) {
-				if (chicken.getX() <= 0 || chicken.getX() + chicken.getWidth() >= getWidth()) {
-					hitEdge = true;
-					break;
+		if(System.currentTimeMillis() - lastEdgeHitTime > 1000){
+			for (int i = 0; i < grid.size(); i++) {
+				Cell cell = (Cell) grid.get(i);
+				Enemy chicken = cell.getOccChicken();
+				if (chicken != null && chicken.isAlive()) {
+					if (chicken.getX() <= 0 || chicken.getX() + chicken.getWidth() >= getWidth()) {
+						hitEdge = true;
+						break;
+					}
 				}
 			}
 		}
 		if (hitEdge) {
+			lastEdgeHitTime = System.currentTimeMillis();
 			gridDirection *= -1;
 			for (int i = 0; i < grid.size(); i++) {
 				Cell cell = (Cell) grid.get(i);
 				cell.shift(0, 20);
+				Enemy chicken = cell.getOccChicken();
+				if (chicken != null && chicken.isAlive()) {
+					chicken.setX(cell.getX());
+				}
 			}
 		}
 		for (int i = 0; i < grid.size(); i++) {
 			Cell cell = (Cell) grid.get(i);
 			cell.shift(gridDirection * gridSpeed, 0);
+		}
+		for (Cell cell : grid) {
+			Enemy chicken = cell.getOccChicken();
+			if (chicken != null && chicken.isAlive() && !chicken.isMovingToCell()) {
+				
+				if (chicken instanceof ZigzagEnemy) {
+					((ZigzagEnemy) chicken).updateZigzag();
+				}
+				
+				if (chicken instanceof ShooterEnemy) {
+					Egg horizontalEgg = ((ShooterEnemy) chicken).shootHorizonalEgg(playerPlane.getX());
+					if (horizontalEgg != null) {
+						eggs.add(horizontalEgg);
+					}
+				}
+			}
 		}
 		if (System.currentTimeMillis() - gameStartTime > 2000) {
 			for (int i = 0; i < grid.size(); i++) {
@@ -284,8 +335,21 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
         		bullets.add(new Bullet(bulletX, bulletY));
                 lastShotTime = currentTime;
             }
-
         }
+//---------------testing cheats------------------
+		if (keyCode == KeyEvent.VK_4) {
+			currentLevel = 4;
+			spawnGrid(); 
+		}
+		if (keyCode == KeyEvent.VK_8) {
+			currentLevel = 8;
+			spawnGrid(); 
+		}
+		if(keyCode == KeyEvent.VK_N){
+			currentLevel++;
+			spawnGrid();
+		}
+//-----------------------------------------------
     }
 
 	@Override

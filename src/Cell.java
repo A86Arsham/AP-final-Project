@@ -53,7 +53,8 @@ public class Cell {
         this.y += dy;
 
         if(this.occChicken!=null && this.occChicken.isAlive() && !this.getOccChicken().isMovingToCell()){
-            this.occChicken.setX(this.occChicken.getX() + dx);
+            double multipliedDx = dx * occChicken.getSpeedMultiplier();
+            this.occChicken.setX(this.occChicken.getX() + multipliedDx);
             this.occChicken.setY(this.occChicken.getY() + dy);
         }
     }

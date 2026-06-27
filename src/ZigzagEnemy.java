@@ -16,8 +16,11 @@ public class ZigzagEnemy extends Enemy{
 
     public void updateZigzag(){
         zigzagCounter += (zigzagDirection * 2);
-        if(zigzagCounter > 15 || zigzagCounter < -15){
-            zigzagCounter *= -1;
+        if(zigzagCounter > 15){
+            zigzagDirection = -1;
+        }
+        else if(zigzagCounter < -15){
+            zigzagDirection = 1;
         }
         setX(getX() + (zigzagDirection * 2));
     }
@@ -26,7 +29,7 @@ public class ZigzagEnemy extends Enemy{
     public void draw(Graphics brush){
         if(isAlive()){
             brush.setColor(Color.ORANGE);
-            brush.fillRect(getX(), getY(), getWidth(), getHealth());
+            brush.fillRect(getX(), getY(), getWidth(), getHeight());
         }
     }
 
