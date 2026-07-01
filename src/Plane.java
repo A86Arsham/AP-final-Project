@@ -9,6 +9,7 @@ public class Plane {
     private int height;
     private int speed;
     private int lives;
+    private int maxLives;
 
     public Plane() {
         this.width = 40;
@@ -17,6 +18,7 @@ public class Plane {
         this.y = 500;
         this.speed = 5;
         this.lives = 3;
+        this.maxLives = 3;
     }
 
     public void move(boolean left, boolean right, boolean up, boolean down, int screenWidth, int screenHeight) {
@@ -52,10 +54,20 @@ public class Plane {
     public int getLives() {
     	return lives;
     }
-
-    public void setLives(int lives) {
-    	this.lives = lives;
+    public int getMaxLives(){
+        return maxLives;
     }
+
+    public void setMaxLives(int maxLives){
+        this.maxLives = maxLives;
+    }
+    public void addLife(){
+        if(this.lives + 1 > this.maxLives){
+            return;
+        }
+        this.lives++;
+    }
+    
     
     public Rectangle getBounds() {
         return new Rectangle(x, y, width, height);

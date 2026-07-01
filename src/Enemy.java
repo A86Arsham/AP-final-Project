@@ -128,4 +128,7 @@ public abstract class Enemy {
 		}
 	}
 
+	public double getSpeedMultiplier(){
+		return 1.0;
+	}
 }
