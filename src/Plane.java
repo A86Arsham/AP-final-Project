@@ -60,12 +60,19 @@ public class Plane {
 
     public void draw(Graphics g) {
         if(shipImage != null){ 
-            g.drawImage(shipImage, x, y, width, height, null);
+            if(isShieldOn){
+                g.drawImage(shipImage, x, y, width, height, null);
+                g.setColor(new Color(0,255,255, 100));
+                g.fillOval(x - 10, y - 10, width + 20, height + 20);
+            }
+            else{
+               g.drawImage(shipImage, x, y, width, height, null);
+            }
         }
         else{    
             if(isShieldOn){
                 g.setColor(new Color(0,255,255, 100));
-                g.fillOval(x - 10, y - 10, width + 20, height + 20);
+                g.fillOval(x - 10, y - 10, width + 200, height + 200);
                 g.setColor(Color.CYAN);
                 g.fillRect(x, y, width, height);
             }

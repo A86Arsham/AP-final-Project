@@ -218,7 +218,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 						explosions.add(new Explosion(chicken.getX() + chicken.getWidth()/2, chicken.getY() + chicken.getHeight()/2));
 						gameMain.soundManager.playCrash();
 
-						if(Math.random() <= 0.20){
+						if(Math.random() <= 1.0){
 							int randomNumber = random.nextInt(5) + 1;
 							Powerup powerup;
 							switch(randomNumber){
