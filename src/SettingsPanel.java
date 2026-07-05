@@ -42,11 +42,11 @@ public class SettingsPanel extends JPanel{
         addComponentListener(new ComponentAdapter() {
             @Override
             public void componentShown(ComponentEvent e){
-                if(gameMain.gamePanel != null && gameMain.gamePanel.soundManager != null){
-                    bgMusicBox.setSelected(gameMain.gamePanel.soundManager.bgMusic);
-                    shotSoundBox.setSelected(gameMain.gamePanel.soundManager.shotSound);
-                    crashSoundBox.setSelected(gameMain.gamePanel.soundManager.crashSound);
-                    endSoundBox.setSelected(gameMain.gamePanel.soundManager.endSound);
+                if(gameMain.gamePanel != null && gameMain.soundManager != null){
+                    bgMusicBox.setSelected(gameMain.soundManager.bgMusic);
+                    shotSoundBox.setSelected(gameMain.soundManager.shotSound);
+                    crashSoundBox.setSelected(gameMain.soundManager.crashSound);
+                    endSoundBox.setSelected(gameMain.soundManager.endSound);
                 }
             }
         });
@@ -73,12 +73,17 @@ public class SettingsPanel extends JPanel{
         bgMusicBox.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e){
-                gameMain.gamePanel.soundManager.bgMusic = bgMusicBox.isSelected();
+                gameMain.soundManager.bgMusic = bgMusicBox.isSelected();
                 if(!bgMusicBox.isSelected()){
-                    gameMain.gamePanel.soundManager.stopBackgroundMusic();
+                    gameMain.soundManager.stopBackgroundMusic();
                 }
                 else{
-                    gameMain.gamePanel.soundManager.playBackgroundMusic();
+                    gameMain.soundManager.playBackgroundMusic();
+                }
+
+                if(gameMain.currentUser != null){
+                    gameMain.currentUser.setSoundsSetting(gameMain.soundManager);
+                    gameMain.db.updateUser(gameMain.currentUser);
                 }
             }
         });
@@ -86,21 +91,33 @@ public class SettingsPanel extends JPanel{
         shotSoundBox.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e){
-                gameMain.gamePanel.soundManager.shotSound = shotSoundBox.isSelected();
+                gameMain.soundManager.shotSound = shotSoundBox.isSelected();
+                if(gameMain.currentUser != null){
+                    gameMain.currentUser.setSoundsSetting(gameMain.soundManager);
+                    gameMain.db.updateUser(gameMain.currentUser);
+                }
             }
         });
 
         crashSoundBox.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e){
-                gameMain.gamePanel.soundManager.crashSound = crashSoundBox.isSelected();
+                gameMain.soundManager.crashSound = crashSoundBox.isSelected();
+                if(gameMain.currentUser != null){
+                    gameMain.currentUser.setSoundsSetting(gameMain.soundManager);
+                    gameMain.db.updateUser(gameMain.currentUser);
+                }
             }
         });
 
         endSoundBox.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e){
-                gameMain.gamePanel.soundManager.endSound = endSoundBox.isSelected();
+                gameMain.soundManager.endSound = endSoundBox.isSelected();
+                if(gameMain.currentUser != null){
+                    gameMain.currentUser.setSoundsSetting(gameMain.soundManager);
+                    gameMain.db.updateUser(gameMain.currentUser);
+                }
             }
         });
 

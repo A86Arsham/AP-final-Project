@@ -58,12 +58,19 @@ public class DatabaseManager {
 				if(username.equals(tokens[0]) && password.equals(tokens[1])) {
 					newUser.setHighestScore(Integer.parseInt(tokens[2]));
 					newUser.setLastReachedLevel(Integer.parseInt(tokens[3]));
-					// user sound prefernces
-					//
-					//
-					//
-					//new SoundManager
-					//set SoundManager to user
+
+					boolean bg = Boolean.parseBoolean(tokens[4]);
+					boolean shot = Boolean.parseBoolean(tokens[5]);
+					boolean crash = Boolean.parseBoolean(tokens[6]);
+					boolean end = Boolean.parseBoolean(tokens[7]);
+					
+					SoundManager userSounds = new SoundManager();
+					userSounds.bgMusic = bg;
+					userSounds.shotSound = shot;
+					userSounds.crashSound = crash;
+					userSounds.endSound = end;
+					newUser.setSoundsSetting(userSounds);
+
 					return newUser;
 				}
 			}
@@ -88,5 +95,35 @@ public class DatabaseManager {
 			e.printStackTrace();
 		}
 		return false;
+	}
+
+	public void updateUser(User user){
+		File tempFile = new File("temp_users.csv");
+		File usersFile = new File(usersFileName);
+
+		try(Scanner scn = new Scanner(usersFile); BufferedWriter bw = new BufferedWriter(new FileWriter(tempFile))){
+			String line = scn.nextLine();
+			String[] tokens = line.split(",");
+
+			if(tokens[0].equals(user.getUsername())){
+				SoundManager sm = user.getSoundsSetting();
+				String bg = String.valueOf(sm.bgMusic);
+				String shot = String.valueOf(sm.shotSound);
+				String crash = String.valueOf(sm.crashSound);
+				String end = String.valueOf(sm.endSound);
+
+				String updatedLine = user.getUsername() + "," + user.getPassword() + "," + user.getHighestScore() + "," + user.getLastReachedLevel() + "," + bg + "," + shot + "," + crash + "," + end;
+				bw.write(updatedLine);
+			}
+			else{
+				bw.write(line);
+			}
+			bw.newLine();
+		}catch(IOException e){
+			e.printStackTrace();
+		}
+
+		usersFile.delete();
+		tempFile.renameTo(usersFile);
 	}
 }

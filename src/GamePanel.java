@@ -109,6 +109,15 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 				if(playerPlane.getLives() <= 0){
 					gameTimer.stop();
 					gameMain.soundManager.playGameover();
+					if(gameMain.currentUser != null){
+					if (score > gameMain.currentUser.getHighestScore()) {
+						gameMain.currentUser.setHighestScore(score);
+					}
+					if (currentLevel > gameMain.currentUser.getLastReachedLevel()) {
+						gameMain.currentUser.setLastReachedLevel(currentLevel);
+					}
+					gameMain.db.updateUser(gameMain.currentUser);
+					}
 					JOptionPane.showMessageDialog(this, "GAME OVER! Final Score: " + score);
             		gameMain.switchScreen("menuScreen");
 					return;
@@ -130,6 +139,17 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 						if (playerPlane.getLives() <= 0) {
 							gameTimer.stop();
 							gameMain.soundManager.playGameover();
+							
+							if(gameMain.currentUser != null){
+								if (score > gameMain.currentUser.getHighestScore()) {
+									gameMain.currentUser.setHighestScore(score);
+								}
+								if (currentLevel > gameMain.currentUser.getLastReachedLevel()) {
+									gameMain.currentUser.setLastReachedLevel(currentLevel);
+								}
+								gameMain.db.updateUser(gameMain.currentUser);
+							}
+
 							JOptionPane.showMessageDialog(this, "GAME OVER! The Chickens Invaded!\nFinal Score: " + score);
 							gameMain.switchScreen("menuScreen");
 							return;
@@ -321,6 +341,17 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 						if (playerPlane.getLives() <= 0) {
 							gameTimer.stop();
 							gameMain.soundManager.playGameover();
+
+							if(gameMain.currentUser != null){
+								if (score > gameMain.currentUser.getHighestScore()) {
+									gameMain.currentUser.setHighestScore(score);
+								}
+								if (currentLevel > gameMain.currentUser.getLastReachedLevel()) {
+									gameMain.currentUser.setLastReachedLevel(currentLevel);
+								}
+								gameMain.db.updateUser(gameMain.currentUser);
+							}
+
 							JOptionPane.showMessageDialog(this, "GAME OVER! The Chickens Invaded!\nFinal Score: " + score);
 							gameMain.switchScreen("menuScreen");
 							return;
@@ -374,6 +405,17 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 				score += 1000;
 				gameTimer.stop();
 				gameMain.soundManager.playWinning();
+
+				if(gameMain.currentUser != null){
+					if (score > gameMain.currentUser.getHighestScore()) {
+						gameMain.currentUser.setHighestScore(score);
+					}
+					if (currentLevel > gameMain.currentUser.getLastReachedLevel()) {
+						gameMain.currentUser.setLastReachedLevel(currentLevel);
+					}
+					gameMain.db.updateUser(gameMain.currentUser);
+				}
+
 				JOptionPane.showMessageDialog(this, "You win! Final Score: " + score);
 				gameMain.switchScreen("menuScreen");
 				return;

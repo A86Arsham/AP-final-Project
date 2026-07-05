@@ -50,7 +50,23 @@ public class LoginPanel extends JPanel {
 				usernameField.setText("");
 				passwordField.setText("");
 				
-				if((gameMain.currentUser = gameMain.db.loginUser(username, password))!=null) {
+				User loggedInUser = gameMain.db.loginUser(username, password);
+				if (loggedInUser != null) {
+					gameMain.currentUser = loggedInUser;
+					SoundManager savedSounds = loggedInUser.getSoundsSetting();
+					if(savedSounds != null){
+						gameMain.soundManager.bgMusic = savedSounds.bgMusic;
+						gameMain.soundManager.shotSound = savedSounds.shotSound;
+						gameMain.soundManager.crashSound = savedSounds.crashSound;
+						gameMain.soundManager.endSound = savedSounds.endSound;
+					}
+					if(!savedSounds.bgMusic){
+						gameMain.soundManager.stopBackgroundMusic();
+					}
+					else{
+						gameMain.soundManager.playBackgroundMusic();
+					}
+				
 					gameMain.gamePanel.resetGame(); 
 					gameMain.switchScreen("gameScreen");
 				}
