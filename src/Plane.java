@@ -2,6 +2,8 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.util.ArrayList;
+import java.awt.Image;
+import javax.swing.ImageIcon;
 
 public class Plane {
     private int x;
@@ -26,9 +28,11 @@ public class Plane {
     private long freezeBombStartTime = 0;
     private int freezeBombDuration = 3000;
 
+    private Image shipImage;
+
     public Plane() {
-        this.width = 40;
-        this.height = 40;
+        this.width = 60;
+        this.height = 60;
         this.x = 375;
         this.y = 500;
         this.speed = 5;
@@ -36,6 +40,9 @@ public class Plane {
         this.maxLives = 3;
         this.bulletAmount = 1;
         this.bulletShootCooldown = 300;
+
+        ImageIcon icon = new ImageIcon("/Users/arsham/AP-final-Project/assets/airplan/1.png");
+        shipImage = icon.getImage();
     }
 
     public void move(boolean left, boolean right, boolean up, boolean down, int screenWidth, int screenHeight) {
@@ -52,16 +59,21 @@ public class Plane {
     }
 
     public void draw(Graphics g) {
-        if(isShieldOn){
-            g.setColor(new Color(0,255,255, 100));
-            g.fillOval(x - 10, y - 10, width + 20, height + 20);
-            g.setColor(Color.CYAN);
-            g.fillRect(x, y, width, height);
+        if(shipImage != null){ 
+            g.drawImage(shipImage, x, y, width, height, null);
         }
-        else{
-            g.setColor(Color.CYAN);
-            g.fillRect(x, y, width, height);
-        }
+        else{    
+            if(isShieldOn){
+                g.setColor(new Color(0,255,255, 100));
+                g.fillOval(x - 10, y - 10, width + 20, height + 20);
+                g.setColor(Color.CYAN);
+                g.fillRect(x, y, width, height);
+            }
+            else{
+                g.setColor(Color.CYAN);
+                g.fillRect(x, y, width, height);
+            }
+        }  
     }
 
     public int getX() {

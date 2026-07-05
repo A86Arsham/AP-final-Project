@@ -19,8 +19,8 @@ public abstract class Enemy {
 	public Enemy(int x, int y) {
 		this.x = x;
 		this.y = y;
-		this.width = 30;
-		this.height = 30;
+		this.width = 50;
+		this.height = 50;
 		this.isAlive = true;
 	}
 

@@ -1,6 +1,7 @@
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
@@ -10,11 +11,15 @@ import java.awt.event.KeyListener;
 import java.util.ArrayList;
 import java.util.Random;
 
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
 public class GamePanel extends JPanel implements ActionListener, KeyListener {
+	private Image normalBackgroundImage;
+	private Image bossBackgroundImage;
+
 	Random random = new Random();
 	boolean leftPressed = false, rightPressed = false, upPressed = false, downPressed = false;
 	long lastShotTime = 0;
@@ -60,6 +65,11 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
     	gameStartTime = System.currentTimeMillis();
 		lastTakenDamageTime = System.currentTimeMillis();
 		this.gameMain = gameMain;
+
+		ImageIcon normalIcon = new ImageIcon("assets/background/background.jpg");
+		normalBackgroundImage = normalIcon.getImage();
+		ImageIcon bossIcon = new ImageIcon("assets/background/background2.jpg");
+		bossBackgroundImage = bossIcon.getImage();
 
 		addComponentListener(new ComponentAdapter() {
 		    @Override
@@ -234,7 +244,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 				gridDirection *= -1;
 				for (int i = 0; i < grid.size(); i++) {
 					Cell cell = (Cell) grid.get(i);
-					cell.shift(0, 20);
+					cell.shift(0, 10);
 					Enemy chicken = cell.getOccChicken();
 					if (chicken != null && chicken.isAlive()) {
 						chicken.setX(cell.getX());
@@ -354,6 +364,12 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 	@Override
 	public void paintComponent(Graphics brush) {
 		super.paintComponent(brush);
+		if(levels[currentLevel-1].isBossLevel){
+			brush.drawImage(bossBackgroundImage, 0, 0, getWidth(), getHeight(), null);
+		}
+		else{
+			brush.drawImage(normalBackgroundImage, 0, 0, getWidth(), getHeight(), null);
+		}
         playerPlane.draw(brush);
         for(Cell cell : grid){
 			Enemy chicken = cell.getOccChicken();
@@ -447,7 +463,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 
 	    for (int row = 0; row < 5; row++) {
 	        for (int col = 0; col < 8; col++) {
-	            int chickenX = 115 + (col * 70);
+	            int chickenX = 115 + (col * 80);
 	            int chickenY = 40 + (row * 45);
 				
 				Enemy enemy = createEnemy(config.enemyTypes, config.cellHealth, chickenX, chickenY, col);

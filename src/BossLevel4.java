@@ -1,8 +1,13 @@
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Image;
 import java.util.ArrayList;
 
+import javax.swing.ImageIcon;
+
 public class BossLevel4 extends Boss {
+    private Image bossImage;
+
     private long lastAttackTime = 0;
     private int attackCooldown = 1500;
 
@@ -13,6 +18,9 @@ public class BossLevel4 extends Boss {
 
     public BossLevel4(){
         super(350, 50, 100, 100, 50, 1.5);
+
+        ImageIcon icon = new ImageIcon("assets/chicken/boss1.png");
+        bossImage = icon.getImage();
     }
 
     @Override
@@ -36,8 +44,13 @@ public class BossLevel4 extends Boss {
 
     @Override
     public void drawBoss(Graphics brush){
-        brush.setColor(Color.YELLOW);
-        brush.fillRect(getX(), getY(), getWidth(), getHeight());
+        if(bossImage != null){
+            brush.drawImage(bossImage, getX(), getY(), getWidth(), getHeight(), null);
+        }
+        else{
+            brush.setColor(Color.YELLOW);
+            brush.fillRect(getX(), getY(), getWidth(), getHeight());
+        }
     }
 
     @Override

@@ -1,10 +1,18 @@
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Image;
+
+import javax.swing.ImageIcon;
 
 public class NormalEnemy extends Enemy{
+	private Image chickenImage;
+	
 	public NormalEnemy (int health, int x, int y) {
 		super(x, y);
 		setHealth(health);
+
+		ImageIcon icon = new ImageIcon("assets/chicken/normal_chicken.png");
+		chickenImage = icon.getImage();
 	}
 
 	@Override
@@ -15,8 +23,12 @@ public class NormalEnemy extends Enemy{
 	@Override
 	public void draw(Graphics brush){
 		if(isAlive()){
-			brush.setColor(Color.RED);
-			brush.fillRect(getX(), getY(), getWidth(), getHeight());
+			if(chickenImage != null){
+				brush.drawImage(chickenImage, getX(), getY(),getWidth() ,getHeight() ,null);
+			}else{
+				brush.setColor(Color.RED);
+				brush.fillRect(getX(), getY(), getWidth(), getHeight());
+			}
 		}
 	}
 }
