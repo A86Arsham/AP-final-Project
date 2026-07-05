@@ -153,4 +153,45 @@ public class DatabaseManager {
 
 		return users;
 	}
+
+	public void saveGameHistory(String username, int score, int level, SoundManager soundSettings){
+		try(BufferedWriter bw = new BufferedWriter(new FileWriter(historyFileName, true))){
+			String date = java.time.LocalDateTime.now().toString();
+
+			String bg;
+			if (soundSettings != null) {
+				bg = String.valueOf(soundSettings.bgMusic);
+			} else {
+				bg = "true";
+			}
+
+			String shot;
+			if(soundSettings != null){
+				shot = String.valueOf(soundSettings.shotSound);
+			}else{
+				shot = "true";
+			}
+
+			String crash;
+			if(soundSettings != null){
+				crash = String.valueOf(soundSettings.crashSound);
+			}else{
+				crash = "true";
+			}
+
+			String end;
+			if(soundSettings != null){
+				end = String.valueOf(soundSettings.endSound);
+			}else{
+				end = "true";
+			}
+
+			String line = username + "," + score + "," + level + "," + date + "," + bg + "," + shot + "," + crash + "," + end;
+
+			bw.write(line);
+			bw.newLine();
+		}catch(IOException e){
+			e.printStackTrace();
+		}
+	}
 }

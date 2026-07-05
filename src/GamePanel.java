@@ -119,6 +119,9 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 					}
 					gameMain.db.updateUser(gameMain.currentUser);
 					}
+
+					String username = gameMain.currentUser.getUsername();
+					gameMain.db.saveGameHistory(username, score, currentLevel, gameMain.soundManager);
 					JOptionPane.showMessageDialog(this, "GAME OVER! Final Score: " + score);
             		gameMain.switchScreen("menuScreen");
 					return;
@@ -150,6 +153,9 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 								}
 								gameMain.db.updateUser(gameMain.currentUser);
 							}
+
+							String username = gameMain.currentUser.getUsername();
+							gameMain.db.saveGameHistory(username, score, currentLevel, gameMain.soundManager);
 
 							JOptionPane.showMessageDialog(this, "GAME OVER! The Chickens Invaded!\nFinal Score: " + score);
 							gameMain.switchScreen("menuScreen");
@@ -353,6 +359,8 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 								gameMain.db.updateUser(gameMain.currentUser);
 							}
 
+							String username = gameMain.currentUser.getUsername();
+							gameMain.db.saveGameHistory(username, score, currentLevel, gameMain.soundManager);
 							JOptionPane.showMessageDialog(this, "GAME OVER! The Chickens Invaded!\nFinal Score: " + score);
 							gameMain.switchScreen("menuScreen");
 							return;
@@ -417,6 +425,8 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 					gameMain.db.updateUser(gameMain.currentUser);
 				}
 
+				String username = gameMain.currentUser.getUsername();
+				gameMain.db.saveGameHistory(username, score, currentLevel, gameMain.soundManager);
 				JOptionPane.showMessageDialog(this, "You win! Final Score: " + score);
 				gameMain.switchScreen("menuScreen");
 				return;
