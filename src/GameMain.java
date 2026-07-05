@@ -42,6 +42,10 @@ public class GameMain{
 
 		HighScorePanel highScorePanel = new HighScorePanel(this);
 		screens.add(highScorePanel, "highScoreScreen");
+
+		HowToPlayPanel howToPlayPanel = new HowToPlayPanel(this);
+		screens.add(howToPlayPanel, "howToPlayScreen");
+
 		gamePanel = new GamePanel(this);
 		screens.add(gamePanel, "gameScreen");
 		

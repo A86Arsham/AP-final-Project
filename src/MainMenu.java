@@ -91,6 +91,13 @@ public class MainMenu extends JPanel{
 				}
 			});
 
+			howToPlayButton.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e){
+					gameMain.switchScreen("howToPlayScreen");
+				}
+			});
+
 			exitButton.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
