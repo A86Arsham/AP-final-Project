@@ -45,6 +45,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 	Boss currentBoss = null;
 
 	long lastEdgeHitTime = 0;
+	
 
 	LevelConfig[] levels = {
 		new LevelConfig(new String[]{"Normal"}, 2, 1.0, 20, 3000, false),
@@ -67,6 +68,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 		lastTakenDamageTime = System.currentTimeMillis();
 		this.gameMain = gameMain;
 
+
 		ImageIcon normalIcon = new ImageIcon("assets/background/background.jpg");
 		normalBackgroundImage = normalIcon.getImage();
 		ImageIcon bossIcon = new ImageIcon("assets/background/background2.jpg");
@@ -79,6 +81,9 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 		    	gameTimer.start();
 
 		        requestFocusInWindow();
+
+				gameMain.soundManager.playBackgroundMusic();
+
 		    }
 		});
 		spawnGrid();
@@ -103,6 +108,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 				playerPlane.setLives(playerPlane.getLives() - 1);
 				if(playerPlane.getLives() <= 0){
 					gameTimer.stop();
+					gameMain.soundManager.playGameover();
 					JOptionPane.showMessageDialog(this, "GAME OVER! Final Score: " + score);
             		gameMain.switchScreen("menuScreen");
 					return;
@@ -123,6 +129,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 						
 						if (playerPlane.getLives() <= 0) {
 							gameTimer.stop();
+							gameMain.soundManager.playGameover();
 							JOptionPane.showMessageDialog(this, "GAME OVER! The Chickens Invaded!\nFinal Score: " + score);
 							gameMain.switchScreen("menuScreen");
 							return;
@@ -182,6 +189,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 						score += chicken.getScoreValue();
 
 						explosions.add(new Explosion(chicken.getX() + chicken.getWidth()/2, chicken.getY() + chicken.getHeight()/2));
+						gameMain.soundManager.playCrash();
 
 						if(Math.random() <= 0.20){
 							int randomNumber = random.nextInt(5) + 1;
@@ -305,11 +313,14 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 				if (egg.isVisible() && egg.getBounds().intersects(playerPlane.getBounds()) && (System.currentTimeMillis() - lastTakenDamageTime > 5000)) {
 					if(!playerPlane.isShielded()){
 						egg.destroy();
-						explosions.add(new Explosion(playerPlane.getX() + playerPlane.getWidth()/2, playerPlane.getY() + playerPlaned.getHeight()/2));
 
+						explosions.add(new Explosion(playerPlane.getX() + playerPlane.getWidth()/2, playerPlane.getY() + playerPlane.getHeight()/2));
+						gameMain.soundManager.playCrash();
+						
 						playerPlane.setLives(playerPlane.getLives() - 1);
 						if (playerPlane.getLives() <= 0) {
 							gameTimer.stop();
+							gameMain.soundManager.playGameover();
 							JOptionPane.showMessageDialog(this, "GAME OVER! The Chickens Invaded!\nFinal Score: " + score);
 							gameMain.switchScreen("menuScreen");
 							return;
@@ -362,6 +373,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 			else if(currentLevel == 8){
 				score += 1000;
 				gameTimer.stop();
+				gameMain.soundManager.playWinning();
 				JOptionPane.showMessageDialog(this, "You win! Final Score: " + score);
 				gameMain.switchScreen("menuScreen");
 				return;
@@ -430,6 +442,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
             //     lastShotTime = currentTime;
             // }
 			playerPlane.shootBullet(bullets);
+			gameMain.soundManager.playShoot();
         }
 //---------------testing cheats------------------
 		if (keyCode == KeyEvent.VK_4) {

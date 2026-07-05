@@ -8,12 +8,16 @@ public class GameMain{
 	DatabaseManager db = new DatabaseManager();
 	User currentUser = null;
 	public GamePanel gamePanel;
+	public SoundManager soundManager;
 	public GameMain() {
 		window = new JFrame("Chicken Invaders");
 		window.setSize(800,600);
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		window.setLocationRelativeTo(null);
 		window.setResizable(false);
+
+		soundManager = new SoundManager();
+		soundManager.playBackgroundMusic();
 
 		controller = new CardLayout();
 		screens = new JPanel(controller);
@@ -33,6 +37,9 @@ public class GameMain{
 		FailedRegisterPopup failedRegisterPopup = new FailedRegisterPopup(this);
 		screens.add(failedRegisterPopup, "failedRegisterScreen");
 		
+		SettingsPanel settingsPanel = new SettingsPanel(this);
+		screens.add(settingsPanel, "settingsScreen");
+
 		gamePanel = new GamePanel(this);
 		screens.add(gamePanel, "gameScreen");
 		

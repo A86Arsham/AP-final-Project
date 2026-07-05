@@ -75,6 +75,13 @@ public class MainMenu extends JPanel{
 				}
 			});
 
+			settingsButton.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e){
+					gameMain.switchScreen("settingsScreen");
+				}
+			});
+
 			exitButton.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
