@@ -29,6 +29,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 	ArrayList<Cell> grid = new ArrayList<>();
 	ArrayList<Bullet> bullets = new ArrayList<Bullet>();
 	ArrayList<Egg> eggs = new ArrayList<Egg>();
+	ArrayList<Explosion> explosions = new ArrayList<>();
 
 	double gridSpeed = 1.0;
 	int gridDirection = 1;
@@ -180,6 +181,8 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 					if (!chicken.isAlive()) {
 						score += chicken.getScoreValue();
 
+						explosions.add(new Explosion(chicken.getX() + chicken.getWidth()/2, chicken.getY() + chicken.getHeight()/2));
+
 						if(Math.random() <= 0.20){
 							int randomNumber = random.nextInt(5) + 1;
 							Powerup powerup;
@@ -302,6 +305,8 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 				if (egg.isVisible() && egg.getBounds().intersects(playerPlane.getBounds()) && (System.currentTimeMillis() - lastTakenDamageTime > 5000)) {
 					if(!playerPlane.isShielded()){
 						egg.destroy();
+						explosions.add(new Explosion(playerPlane.getX() + playerPlane.getWidth()/2, playerPlane.getY() + playerPlaned.getHeight()/2));
+
 						playerPlane.setLives(playerPlane.getLives() - 1);
 						if (playerPlane.getLives() <= 0) {
 							gameTimer.stop();
@@ -335,6 +340,14 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
     		b.move();
 		}	
 		
+		for(int i = 0; i<explosions.size(); i++){
+			Explosion exp = explosions.get(i);
+			exp.updateFrame();
+			if(!exp.isVisible()){
+				explosions.remove(i);
+			}
+		}
+
 		//spawn level
 		if(!levels[currentLevel - 1].isBossLevel && grid.size() > 0 && isLevelComplete()){
 			score += 200;
@@ -380,6 +393,9 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 		if(currentBoss != null && currentBoss.isAlive()){
 			currentBoss.drawBoss(brush);
 			currentBoss.drawHealthBar(brush);
+		}
+		for(Explosion e : explosions){
+			e.draw(brush);
 		}
         for(Bullet b : bullets) {
         	b.draw(brush);
@@ -495,6 +511,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 		bullets.clear();
 		eggs.clear();
 		powerups.clear();
+		explosions.clear();
 		gameStartTime = System.currentTimeMillis();
 		spawnGrid();
 		gameTimer.start();

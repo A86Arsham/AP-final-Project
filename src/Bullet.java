@@ -10,7 +10,6 @@ public class Bullet {
 	private boolean visible;
 
 	public Bullet(int x, int y){
-		System.out.println("Java is currently looking in: " + new java.io.File(".").getAbsolutePath());
 		this.x = x;
 		this.y = y;
 		this.speed = 14;
