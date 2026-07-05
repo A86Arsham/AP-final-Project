@@ -478,6 +478,27 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
         brush.drawString("Level: " + currentLevel, 10, 45);
         brush.drawString("Lives: " + playerPlane.getLives(), 10, 70);
 
+		String username = gameMain.currentUser.getUsername();
+		brush.drawString("Player: " + username, getWidth() - 160, 25);
+
+		brush.drawString("Bullets: " + playerPlane.getBulletAmount(), getWidth() - 160, 50);
+
+		int powerupY = 75;
+		if(playerPlane.isShielded()){
+			brush.setColor(new Color(0, 255, 255));
+			brush.drawString("Shield Active", getWidth() - 160, powerupY);
+			powerupY += 25;
+		}
+		if (playerPlane.isRapidFire()) {
+            brush.setColor(Color.YELLOW);
+            brush.drawString("Rapid Fire", getWidth() - 160, powerupY);
+            powerupY += 25;
+        }
+        if (playerPlane.isFreezeBomb()) {
+            brush.setColor(Color.WHITE);
+            brush.drawString("Enemies Frozen!", getWidth() - 160, powerupY);
+        }
+
 		if(isPaused){
 			brush.setColor(new Color(0,0,0,150));
 			brush.fillRect(0, 0, getWidth(), getHeight());
