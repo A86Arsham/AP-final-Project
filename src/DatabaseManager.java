@@ -3,6 +3,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class DatabaseManager {
@@ -125,5 +126,31 @@ public class DatabaseManager {
 
 		usersFile.delete();
 		tempFile.renameTo(usersFile);
+	}
+
+	public ArrayList<User> getTopScore(){
+		ArrayList<User> users = new ArrayList<>();
+		try(Scanner scn = new Scanner(new File(usersFileName))){
+			while(scn.hasNextLine()){
+				String[] tokens = scn.nextLine().split(",");
+				User u = new User(tokens[0], tokens[1]);
+				u.setHighestScore(Integer.parseInt(tokens[2]));
+				users.add(u);
+			}
+		}catch(FileNotFoundException e){
+			e.printStackTrace();
+		}
+
+		for(int i=0; i<users.size() ; i++){
+			for(int j = i+1; j< users.size(); j++){
+				if(users.get(i).getHighestScore() < users.get(j).getHighestScore()){
+					User temp = users.get(i);
+					users.set(i, users.get(j));
+					users.set(j, temp);
+				}
+			}
+		}
+
+		return users;
 	}
 }

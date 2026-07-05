@@ -46,6 +46,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 
 	long lastEdgeHitTime = 0;
 	
+	boolean isPaused = false;
 
 	LevelConfig[] levels = {
 		new LevelConfig(new String[]{"Normal"}, 2, 1.0, 20, 3000, false),
@@ -466,6 +467,14 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
         brush.drawString("Score: " + score, 10, 20);
         brush.drawString("Level: " + currentLevel, 10, 45);
         brush.drawString("Lives: " + playerPlane.getLives(), 10, 70);
+
+		if(isPaused){
+			brush.setColor(new Color(0,0,0,150));
+			brush.fillRect(0, 0, getWidth(), getHeight());
+			brush.setColor(Color.RED);
+			brush.setFont(new Font("Arial", Font.BOLD, 60));
+			brush.drawString("PAUSED", getWidth() / 2 - 125, getHeight() / 2);
+		}
 	}
 
 	@Override
@@ -486,6 +495,21 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 			playerPlane.shootBullet(bullets);
 			gameMain.soundManager.playShoot();
         }
+		if (keyCode == KeyEvent.VK_P){
+			isPaused = !isPaused;
+			if(isPaused){
+				gameTimer.stop();
+			}
+			else{
+				gameTimer.start();
+			}
+			repaint();
+		}
+		if (keyCode == KeyEvent.VK_ESCAPE){
+			gameTimer.stop();
+			isPaused = false;
+			gameMain.switchScreen("menuScreen");
+		}
 //---------------testing cheats------------------
 		if (keyCode == KeyEvent.VK_4) {
 			currentLevel = 4;

@@ -60,7 +60,6 @@ public class SettingsPanel extends JPanel{
         JButton backButton = new JButton("Back to Menu");
         backButton.setFont(new Font("Arial", Font.BOLD, 24));
         backButton.setBackground(new Color(0, 120, 215));
-        backButton.setBackground(Color.WHITE);
         add(backButton);
         
         backButton.addActionListener(new ActionListener() {

@@ -40,6 +40,8 @@ public class GameMain{
 		SettingsPanel settingsPanel = new SettingsPanel(this);
 		screens.add(settingsPanel, "settingsScreen");
 
+		HighScorePanel highScorePanel = new HighScorePanel(this);
+		screens.add(highScorePanel, "highScoreScreen");
 		gamePanel = new GamePanel(this);
 		screens.add(gamePanel, "gameScreen");
 		

@@ -84,6 +84,13 @@ public class MainMenu extends JPanel{
 				}
 			});
 
+			highScoresButton.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					gameMain.switchScreen("highScoreScreen");
+				}
+			});
+
 			exitButton.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
