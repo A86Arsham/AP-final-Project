@@ -4,7 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 public class RegisterPanel extends JPanel {
 	public RegisterPanel(GameMain gameMain) {
-		setLayout(new GridLayout(6,1,10,10));
+		setLayout(new GridLayout(7,1,10,10));
 		setBackground(new Color(42, 41, 43));
 		
 		JLabel titleLabel = new JLabel("Register",JLabel.CENTER);
@@ -56,6 +56,20 @@ public class RegisterPanel extends JPanel {
 		});
 		add(registerButton);
 		
-		
-	}
+		JButton backButton = new JButton("Back to Menu");
+		backButton.setFont(new Font("Arial", Font.BOLD, 24));
+		backButton.setBackground(new Color(100, 100, 100)); 
+		backButton.setForeground(Color.WHITE);
+		backButton.setBorderPainted(false);
+		backButton.setFocusPainted(false);
+
+		backButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				gameMain.switchScreen("menuScreen");
+			}
+		});
+		add(backButton);
+
+	}	
 }

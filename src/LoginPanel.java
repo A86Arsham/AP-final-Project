@@ -5,7 +5,7 @@ import java.awt.event.ActionListener;
 public class LoginPanel extends JPanel {
 
 	public LoginPanel(GameMain gameMain) {
-		setLayout(new GridLayout(7,1,0,10));
+		setLayout(new GridLayout(8,1,0,10));
 		setBackground(new Color(42, 41, 43));
 
 		JLabel titleLabel = new JLabel("LOGIN",JLabel.CENTER);
@@ -93,6 +93,23 @@ public class LoginPanel extends JPanel {
 			}
 		});
 		add(goToRegisterButton);
+		
+		JButton backButton = new JButton("Back to Menu");
+		backButton.setFont(new Font("Arial", Font.BOLD, 24));
+		backButton.setBackground(new Color(100, 100, 100)); 
+		backButton.setForeground(Color.WHITE);
+		backButton.setBorderPainted(false);
+		backButton.setFocusPainted(false);
+
+		backButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				gameMain.switchScreen("menuScreen");
+			}
+		});
+		add(backButton);
+
+
 
 
 	}
