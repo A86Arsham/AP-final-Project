@@ -218,7 +218,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 						explosions.add(new Explosion(chicken.getX() + chicken.getWidth()/2, chicken.getY() + chicken.getHeight()/2));
 						gameMain.soundManager.playCrash();
 
-						if(Math.random() <= 1.0){
+						if(Math.random() <= 0.20){
 							int randomNumber = random.nextInt(5) + 1;
 							Powerup powerup;
 							switch(randomNumber){
@@ -539,6 +539,17 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 		if (keyCode == KeyEvent.VK_ESCAPE){
 			gameTimer.stop();
 			isPaused = false;
+			
+			String username = gameMain.currentUser.getUsername();
+			gameMain.db.saveGameHistory(username, score, currentLevel, gameMain.soundManager);
+			if(score > gameMain.currentUser.getHighestScore()){
+				gameMain.currentUser.setHighestScore(score);
+			}
+			if(currentLevel > gameMain.currentUser.getLastReachedLevel()){
+				gameMain.currentUser.setLastReachedLevel(currentLevel);
+			}
+			gameMain.db.updateUser(gameMain.currentUser);
+			
 			gameMain.switchScreen("menuScreen");
 		}
 //---------------testing cheats------------------
