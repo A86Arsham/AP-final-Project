@@ -6,41 +6,45 @@ public class LoginPanel extends JPanel {
 
 	public LoginPanel(GameMain gameMain) {
 		setLayout(new GridLayout(8,1,0,10));
-		setBackground(new Color(42, 41, 43));
+		setBackground(new Color(5, 5, 15));
 
 		JLabel titleLabel = new JLabel("LOGIN",JLabel.CENTER);
-        titleLabel.setForeground(Color.RED);
-		titleLabel.setFont(new Font("Arial", Font.BOLD, 36));
+        titleLabel.setForeground(new Color(57, 255, 20));
+		titleLabel.setFont(new Font("Monospaced", Font.BOLD, 36));
 		add(titleLabel);
 
-		JLabel usernameLabel = new JLabel("Username:", JLabel.LEFT);
-		usernameLabel.setForeground(Color.RED);
-		usernameLabel.setFont(new Font("Arial", Font.PLAIN, 18));
+		JLabel usernameLabel = new JLabel("USERNAME:", JLabel.LEFT);
+		usernameLabel.setForeground(new Color(0, 255, 255));
+		usernameLabel.setFont(new Font("Monospaced", Font.PLAIN, 18));
 		add(usernameLabel);
 
 		JTextField usernameField = new JTextField();
-        usernameField.setFont(new Font("Arial", Font.PLAIN, 18));
+        usernameField.setFont(new Font("Monospaced", Font.PLAIN, 18));
+		usernameField.setBackground(new Color(10, 10, 30));
+		usernameField.setForeground(Color.WHITE);
         usernameField.setHorizontalAlignment(JTextField.CENTER);
 		add(usernameField);
 
-		JLabel passwordLabel = new JLabel("Password:", JLabel.LEFT);
-		passwordLabel.setForeground(Color.RED);
-		passwordLabel.setFont(new Font("Arial", Font.PLAIN, 18));
+		JLabel passwordLabel = new JLabel("PASSWORD:", JLabel.LEFT);
+		passwordLabel.setForeground(new Color(0, 255, 255));
+		passwordLabel.setFont(new Font("Monospaced", Font.PLAIN, 18));
 		add(passwordLabel);
 
 		JTextField passwordField = new JTextField();
-        passwordField.setFont(new Font("Arial", Font.PLAIN, 18));
+        passwordField.setFont(new Font("Monospaced", Font.PLAIN, 18));
+		passwordField.setBackground(new Color(10, 10, 30));
+		passwordField.setForeground(Color.WHITE);
         passwordField.setHorizontalAlignment(JTextField.CENTER);
 		add(passwordField);
 
 
-		JButton loginButton = new JButton("Login");
-		loginButton.setFont(new Font("Arial", Font.BOLD, 24));
+		JButton loginButton = new JButton("LOGIN");
+		loginButton.setFont(new Font("Monospaced", Font.BOLD, 24));
 		loginButton.setOpaque(true);
-		loginButton.setBackground(new Color(0, 120, 215));
-		loginButton.setForeground(Color.WHITE);
-		loginButton.setBorderPainted(false);
-		loginButton.setFocusPainted(false);
+		loginButton.setBackground(new Color(10, 10, 30));
+		loginButton.setForeground(new Color(0, 255, 255));
+		loginButton.setBorderPainted(true);
+		loginButton.setBorder(BorderFactory.createLineBorder(new Color(0, 255, 255), 2));
 		loginButton.addActionListener(new ActionListener() {
 
 			@Override
@@ -78,12 +82,13 @@ public class LoginPanel extends JPanel {
 		});
 		add(loginButton);
 
-		JButton goToRegisterButton = new JButton("Dont have an account? Register");
-		goToRegisterButton.setFont(new Font("Arial", Font.BOLD, 24));
-		goToRegisterButton.setBackground(new Color(41, 42, 43));
-		goToRegisterButton.setForeground(Color.WHITE);
-		goToRegisterButton.setBorderPainted(false);
-		goToRegisterButton.setFocusPainted(false);
+		JButton goToRegisterButton = new JButton("DON'T HAVE AN ACCOUNT? REGISTER");
+		goToRegisterButton.setFont(new Font("Monospaced", Font.BOLD, 24));
+		goToRegisterButton.setBackground(new Color(10, 10, 30));
+		goToRegisterButton.setForeground(new Color(0, 255, 255));
+		goToRegisterButton.setOpaque(true);
+		goToRegisterButton.setBorderPainted(true);
+		goToRegisterButton.setBorder(BorderFactory.createLineBorder(new Color(0, 255, 255), 2));
 		goToRegisterButton.addActionListener(new ActionListener() {
 
 			@Override
@@ -94,11 +99,13 @@ public class LoginPanel extends JPanel {
 		});
 		add(goToRegisterButton);
 		
-		JButton backButton = new JButton("Back to Menu");
-		backButton.setFont(new Font("Arial", Font.BOLD, 24));
-		backButton.setBackground(new Color(100, 100, 100)); 
-		backButton.setForeground(Color.WHITE);
-		backButton.setBorderPainted(false);
+		JButton backButton = new JButton("BACK TO MENU");
+		backButton.setFont(new Font("Monospaced", Font.BOLD, 24));
+		backButton.setBackground(new Color(10, 10, 30)); 
+		backButton.setForeground(new Color(0, 255, 255));
+		backButton.setOpaque(true);
+		backButton.setBorderPainted(true);		
+		backButton.setBorder(BorderFactory.createLineBorder(new Color(0, 255, 255), 2));
 		backButton.setFocusPainted(false);
 
 		backButton.addActionListener(new ActionListener() {

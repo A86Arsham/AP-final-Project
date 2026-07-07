@@ -1,3 +1,4 @@
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
@@ -11,11 +12,11 @@ import java.awt.event.ComponentEvent;
 public class SettingsPanel extends JPanel{
     public SettingsPanel(GameMain gameMain){
         setLayout(new GridLayout(6, 1, 10, 10));
-        setBackground(new Color(42, 41, 43));
+        setBackground(new Color(5, 5, 15));
 
-        JLabel titleLabel = new JLabel("Setting", JLabel.CENTER);
-        titleLabel.setForeground(Color.RED);
-        titleLabel.setFont(new Font("Arial", Font.BOLD, 36));
+        JLabel titleLabel = new JLabel("SETTING", JLabel.CENTER);
+        titleLabel.setForeground(new Color(57, 255, 20));
+        titleLabel.setFont(new Font("Monospaced", Font.BOLD, 36));
         add(titleLabel);
 
         JCheckBox bgMusicBox = new JCheckBox("Background Music");
@@ -23,21 +24,17 @@ public class SettingsPanel extends JPanel{
         JCheckBox crashSoundBox = new JCheckBox("Explosion Sound");
         JCheckBox endSoundBox = new JCheckBox("Game Over / Win Sound");
 
-        bgMusicBox.setForeground(Color.WHITE);
-        bgMusicBox.setFont(new Font("Arial", Font.PLAIN, 24));
-        bgMusicBox.setBackground(new Color(42, 41, 43));
+        bgMusicBox.setForeground(new Color(0, 255, 255));
+        bgMusicBox.setFont(new Font("Monospaced", Font.PLAIN, 24));
 
-        shotSoundBox.setForeground(Color.WHITE);
-        shotSoundBox.setFont(new Font("Arial", Font.PLAIN, 24));
-        shotSoundBox.setBackground(new Color(42, 41, 43));
+        shotSoundBox.setForeground(new Color(0, 255, 255));
+        shotSoundBox.setFont(new Font("Monospaced", Font.PLAIN, 24));
 
-        crashSoundBox.setForeground(Color.WHITE);
-        crashSoundBox.setFont(new Font("Arial", Font.PLAIN, 24));
-        crashSoundBox.setBackground(new Color(42, 41, 43));
+        crashSoundBox.setForeground(new Color(0, 255, 255));
+        crashSoundBox.setFont(new Font("Monospaced", Font.PLAIN, 24));
 
-        endSoundBox.setForeground(Color.WHITE);
-        endSoundBox.setFont(new Font("Arial", Font.PLAIN, 24));
-        endSoundBox.setBackground(new Color(42, 41, 43));
+        endSoundBox.setForeground(new Color(0, 255, 255));
+        endSoundBox.setFont(new Font("Monospaced", Font.PLAIN, 24));
 
         addComponentListener(new ComponentAdapter() {
             @Override
@@ -57,9 +54,13 @@ public class SettingsPanel extends JPanel{
         add(endSoundBox);
         
 
-        JButton backButton = new JButton("Back to Menu");
-        backButton.setFont(new Font("Arial", Font.BOLD, 24));
-        backButton.setBackground(new Color(0, 120, 215));
+        JButton backButton = new JButton("BACK TO MENU");
+        backButton.setFont(new Font("Monospaced", Font.BOLD, 24));
+        backButton.setOpaque(true);
+        backButton.setBackground(new Color(10, 10, 30));
+        backButton.setForeground(new Color(0, 255, 255));
+        backButton.setBorderPainted(true);
+        backButton.setBorder(BorderFactory.createLineBorder(new Color(0, 255, 255), 2));
         add(backButton);
         
         backButton.addActionListener(new ActionListener() {

@@ -7,11 +7,11 @@ public class HowToPlayPanel extends JPanel {
     
     public HowToPlayPanel(GameMain gameMain) {
         setLayout(new GridLayout(10, 1, 5, 5));
-        setBackground(new Color(42, 41, 43));
+        setBackground(new Color(5, 5, 15));
 
-        JLabel titleLabel = new JLabel("How to Play", JLabel.CENTER);
-        titleLabel.setForeground(Color.RED);
-        titleLabel.setFont(new Font("Arial", Font.BOLD, 36));
+        JLabel titleLabel = new JLabel("HOW TO PLAY", JLabel.CENTER);
+        titleLabel.setForeground(new Color(57, 255, 20));
+        titleLabel.setFont(new Font("Monospaced", Font.BOLD, 36));
         add(titleLabel);
 
         JLabel label1 = new JLabel("W / ↑ : Move Up", JLabel.CENTER);
@@ -22,8 +22,8 @@ public class HowToPlayPanel extends JPanel {
         JLabel label6 = new JLabel("P : Pause / Resume", JLabel.CENTER);
         JLabel label7 = new JLabel("Esc : Quit to Main Menu", JLabel.CENTER);
 
-        Font font = new Font("Arial", Font.PLAIN, 22);
-        Color textColor = Color.WHITE;
+        Font font = new Font("Monospaced", Font.PLAIN, 22);
+        Color textColor = new Color(0, 255, 255);
 
         label1.setForeground(textColor); 
         label1.setFont(font); 
@@ -54,8 +54,13 @@ public class HowToPlayPanel extends JPanel {
         add(label7);
 
         JButton backButton = new JButton("Back to Menu");
-        backButton.setFont(new Font("Arial", Font.BOLD, 24));
-        backButton.setBackground(new Color(0, 120, 215));
+        backButton.setFont(new Font("Monospaced", Font.BOLD, 24));
+        backButton.setOpaque(true);
+        backButton.setForeground(new Color(0, 255, 255));
+        backButton.setBackground(new Color(10, 10, 30));
+        backButton.setBorderPainted(true);
+        backButton.setBorder(BorderFactory.createLineBorder(new Color(0, 255, 255), 2));
+
         
         
         backButton.addActionListener(new ActionListener() {
