@@ -5,3 +5,9 @@ bin/
 out/
 .idea/
 AP-final-Project.iml
+*.class
+users.csv
+history.csv
+temp_users.csv
+.DS_Store
+.vscode/
