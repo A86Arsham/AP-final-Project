@@ -1,3 +1,7 @@
+/**
+ * model for a registered player
+ * stores credentials, high scores and level, and audio settings
+ */
 package database;
 
 import main.*;

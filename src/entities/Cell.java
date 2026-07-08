@@ -1,3 +1,7 @@
+/**
+ * a single slot in the grid
+ * tracks whether the cell s occupied and by which type of enemy
+ */
 package entities;
 
 import main.*;

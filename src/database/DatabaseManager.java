@@ -1,3 +1,6 @@
+/**
+ * handles registration, login and user updates
+ */
 package database;
 
 import main.*;

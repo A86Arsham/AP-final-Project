@@ -1,3 +1,6 @@
+/**
+ * abstract class for all enemy types
+ */
 package entities;
 
 import main.*;

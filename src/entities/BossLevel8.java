@@ -1,3 +1,7 @@
+/**
+ * Final boss
+ * has 100 HP and 8 directional attacks
+ */
 package entities;
 
 import main.*;

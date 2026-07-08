@@ -1,3 +1,8 @@
+/**
+ * navigation hub for the game
+ * contains buttons for starting a new game, viewing high scores, adjusting audio setting and exiting the game
+ */
+
 package ui;
 
 import main.*;

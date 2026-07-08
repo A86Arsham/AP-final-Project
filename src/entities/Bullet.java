@@ -1,3 +1,6 @@
+/**
+ * projectile fired by the player's plane. moves upwards.
+ */
 package entities;
 
 import main.*;

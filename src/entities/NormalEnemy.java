@@ -1,3 +1,7 @@
+/**
+ * standard enemy
+ * move horizontally with the grid and drops eggs vertically
+ */
 package entities;
 
 import main.*;

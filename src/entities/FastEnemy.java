@@ -1,3 +1,7 @@
+/**
+ * high speed enemy
+ * moves horizontally at twice the speed of normal enemies
+ */
 package entities;
 
 import main.*;

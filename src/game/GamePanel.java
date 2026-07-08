@@ -1,3 +1,8 @@
+/**
+ * game engine
+ * handles the swing Timer loop, keyboard inputs , collision detection, level progression, entity spawning and drawing all graphics
+ */
+
 package game;
 
 import main.*;

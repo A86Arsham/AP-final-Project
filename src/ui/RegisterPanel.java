@@ -1,3 +1,7 @@
+/**
+ * user registration panel
+ * handles new account creation, checks for duplicates, writes the account to the database
+ */
 package ui;
 
 import main.*;

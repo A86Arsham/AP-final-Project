@@ -1,3 +1,6 @@
+/**
+ * projectile fired by enemies. falls downwards towards the player.
+ */
 package entities;
 
 import main.*;

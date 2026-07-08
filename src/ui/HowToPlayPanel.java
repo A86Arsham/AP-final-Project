@@ -1,3 +1,7 @@
+/**
+ * guide screen
+ * displays the game's list of keyboard controls
+ */
 package ui;
 
 import main.*;

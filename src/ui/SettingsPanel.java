@@ -1,3 +1,8 @@
+/**
+ * audio configuration panel
+ * provides checkboxes to toggle sounds and music
+ * changes are saved to uses's profile instantly
+ */
 package ui;
 
 import main.*;

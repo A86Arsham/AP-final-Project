@@ -1,3 +1,6 @@
+/**
+ * in addition to dropping eggs, it fires them horizontally and the direction of the player's plane
+ */
 package entities;
 
 import main.*;

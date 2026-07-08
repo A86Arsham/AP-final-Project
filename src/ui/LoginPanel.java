@@ -1,3 +1,8 @@
+/**
+ * user login panel
+ * gets username and password inputs and checks them with databsase via DatabaseManager
+ */
+
 package ui;
 
 import main.*;

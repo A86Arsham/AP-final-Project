@@ -1,3 +1,7 @@
+/**
+ * player's plane
+ * manages position, boundary, shooting, active powerups and remaining lives
+ */
 package entities;
 
 import main.*;

@@ -1,3 +1,8 @@
+/**
+ * Audio Controller
+ * loads and plays WAV clips using javax.sound.sampled
+ */
+
 package audio;
 
 import main.*;

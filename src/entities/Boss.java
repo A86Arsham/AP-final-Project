@@ -1,3 +1,7 @@
+/**
+ * abstract class for boss
+ * handles movement, and drawing the boss and the health bar
+ */
 package entities;
 
 import main.*;

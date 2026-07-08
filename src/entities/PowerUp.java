@@ -1,3 +1,6 @@
+/**
+ * abstract class for collectible items droped by defeated enemies
+ */
 package entities;
 
 import main.*;

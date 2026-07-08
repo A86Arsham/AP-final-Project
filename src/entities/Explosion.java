@@ -1,3 +1,6 @@
+/**
+ * a visual effect for when the chicken or the player's plane is shot
+ */
 package entities;
 
 import main.*;

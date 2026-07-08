@@ -1,3 +1,7 @@
+/**
+ * mid game boss
+ * has 50HP and 4 directional egg attacks
+ */
 package entities;
 
 import main.*;

@@ -1,3 +1,6 @@
+/**
+ * data structure holding configuration for each level
+ */
 package game;
 
 import main.*;

@@ -1,3 +1,7 @@
+/**
+ * leaderboard UI
+ * reads the database, sorts users by their highest scores and displays the top 5 players
+ */
 package ui;
 
 import main.*;

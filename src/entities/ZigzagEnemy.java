@@ -1,3 +1,7 @@
+/**
+ * enemy with special movement
+ * moves diagonally 
+ */
 package entities;
 
 import main.*;
