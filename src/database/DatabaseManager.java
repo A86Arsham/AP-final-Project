@@ -110,33 +110,42 @@ public class DatabaseManager {
 	}
 
 	public void updateUser(User user){
-		File tempFile = new File("temp_users.csv");
 		File usersFile = new File(usersFileName);
+		ArrayList<String> lines = new ArrayList<>();
+		boolean userFound = false;
+		try(Scanner scn = new Scanner(usersFile)){
+			while(scn.hasNextLine()){
+				String line = scn.nextLine();
+				String[] tokens = line.split(",");
 
-		try(Scanner scn = new Scanner(usersFile); BufferedWriter bw = new BufferedWriter(new FileWriter(tempFile))){
-			String line = scn.nextLine();
-			String[] tokens = line.split(",");
+				if(tokens[0].equals(user.getUsername())){
+					userFound = true;
+					SoundManager sm = user.getSoundsSetting();
+					String bg = String.valueOf(sm.bgMusic);
+					String shot = String.valueOf(sm.shotSound);
+					String crash = String.valueOf(sm.crashSound);
+					String end = String.valueOf(sm.endSound);
 
-			if(tokens[0].equals(user.getUsername())){
-				SoundManager sm = user.getSoundsSetting();
-				String bg = String.valueOf(sm.bgMusic);
-				String shot = String.valueOf(sm.shotSound);
-				String crash = String.valueOf(sm.crashSound);
-				String end = String.valueOf(sm.endSound);
-
-				String updatedLine = user.getUsername() + "," + user.getPassword() + "," + user.getHighestScore() + "," + user.getLastReachedLevel() + "," + bg + "," + shot + "," + crash + "," + end;
-				bw.write(updatedLine);
+					String updatedLine = user.getUsername() + "," + user.getPassword() + "," + user.getHighestScore() + "," + user.getLastReachedLevel() + "," + bg + "," + shot + "," + crash + "," + end;
+					lines.add(updatedLine);
+				}
+				else{
+					lines.add(line);
+				}
 			}
-			else{
-				bw.write(line);
-			}
-			bw.newLine();
 		}catch(IOException e){
 			e.printStackTrace();
 		}
 
-		usersFile.delete();
-		tempFile.renameTo(usersFile);
+		try(BufferedWriter bw = new BufferedWriter(new FileWriter(usersFileName))){
+			for(String line : lines){
+				bw.write(line);
+				bw.newLine();
+			}
+		}catch(IOException e){
+				e.printStackTrace();
+		}
+
 	}
 
 	public ArrayList<User> getTopScore(){
