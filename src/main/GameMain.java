@@ -11,11 +11,11 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 public class GameMain{
-	JFrame window;
-	JPanel screens;
-	CardLayout controller;
-	DatabaseManager db = new DatabaseManager();
-	User currentUser = null;
+	public JFrame window;
+	public JPanel screens;
+	public CardLayout controller;
+	public DatabaseManager db = new DatabaseManager();
+	public User currentUser = null;
 	public GamePanel gamePanel;
 	public SoundManager soundManager;
 	public GameMain() {

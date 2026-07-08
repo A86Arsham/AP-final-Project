@@ -29,7 +29,7 @@ public class RegisterPanel extends JPanel {
 		JTextField usernameField = new JTextField();
         usernameField.setFont(new Font("Monospaced", Font.PLAIN, 18));
 		usernameField.setBackground(new Color(10, 10, 30));
-		setForeground(Color.WHITE);
+		usernameField.setForeground(Color.WHITE);
         usernameField.setHorizontalAlignment(JTextField.CENTER);
 		add(usernameField);
 		
