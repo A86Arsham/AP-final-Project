@@ -54,7 +54,7 @@ public class Plane {
         this.bulletAmount = 1;
         this.bulletShootCooldown = 300;
 
-        ImageIcon icon = new ImageIcon("/Users/arsham/AP-final-Project/assets/airplan/1.png");
+        ImageIcon icon = new ImageIcon("assets/airplan/1.png");
         shipImage = icon.getImage();
     }
 
@@ -217,5 +217,13 @@ public class Plane {
         if(isFreezeBombOn && (currentTime - freezeBombStartTime > freezeBombDuration)){
             isFreezeBombOn = false;
         }
+    }
+
+    public void resetPowerups(){
+        isShieldOn = false;
+        isRapidFireOn = false;
+        isFreezeBombOn = false;
+        bulletAmount = 1;
+        bulletShootCooldown = 300;
     }
 }

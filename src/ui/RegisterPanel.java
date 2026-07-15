@@ -69,6 +69,7 @@ public class RegisterPanel extends JPanel {
 			    	return;
 			    }
 			    gameMain.currentUser = gameMain.db.registerUser(username, password);
+				gameMain.gamePanel.resetGame();
 				gameMain.switchScreen("gameScreen");
 			}
 		});

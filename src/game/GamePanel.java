@@ -119,12 +119,12 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 				eggs.add(bossEggs.get(i));
 			}
 
-			if(currentBoss.getBounds().intersects(playerPlane.getBounds())){
+			if(currentBoss.getBounds().intersects(playerPlane.getBounds()) && System.currentTimeMillis() - lastTakenDamageTime > 2000){
 				playerPlane.setLives(playerPlane.getLives() - 1);
 				if(playerPlane.getLives() <= 0){
 					gameTimer.stop();
 					gameMain.soundManager.playGameover();
-					if(gameMain.currentUser != null){
+
 					if (score > gameMain.currentUser.getHighestScore()) {
 						gameMain.currentUser.setHighestScore(score);
 					}
@@ -132,7 +132,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 						gameMain.currentUser.setLastReachedLevel(currentLevel);
 					}
 					gameMain.db.updateUser(gameMain.currentUser);
-					}
+					
 
 					String username = gameMain.currentUser.getUsername();
 					gameMain.db.saveGameHistory(username, score, currentLevel, gameMain.soundManager);
@@ -140,6 +140,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
             		gameMain.switchScreen("menuScreen");
 					return;
 				}
+				lastTakenDamageTime = System.currentTimeMillis();
 				playerPlane.respawn();
 			}
 		}
@@ -232,7 +233,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 						explosions.add(new Explosion(chicken.getX() + chicken.getWidth()/2, chicken.getY() + chicken.getHeight()/2));
 						gameMain.soundManager.playCrash();
 
-						if(Math.random() <= 0.20){
+						if(Math.random() <= 1.0){
 							int randomNumber = random.nextInt(5) + 1;
 							Powerup powerup;
 							switch(randomNumber){
@@ -308,6 +309,40 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 				cell.shift(gridDirection * gridSpeed, 0);
 			}
 		}
+
+		//check if the grid hits the bottom
+		boolean invaded = false;
+		for(Cell cell : grid){
+			Enemy chicken = cell.getOccChicken();
+			if(chicken != null && chicken.isAlive()){
+				if(chicken.getY() + chicken.getHeight() >= getHeight()){
+					invaded = true;
+					break;
+				}
+			}
+		}
+		if(invaded){
+			gameTimer.stop();
+			String username = gameMain.currentUser.getUsername();
+			gameMain.db.saveGameHistory(username, score, currentLevel, gameMain.soundManager);
+
+			if(score > gameMain.currentUser.getHighestScore()){
+				gameMain.currentUser.setHighestScore(score);
+			}
+			if(currentLevel > gameMain.currentUser.getLastReachedLevel()){
+				gameMain.currentUser.setLastReachedLevel(currentLevel);
+			}
+			gameMain.db.updateUser(gameMain.currentUser);
+
+			if(gameMain.soundManager.endSound){
+				gameMain.soundManager.playGameover();
+			}
+
+			JOptionPane.showMessageDialog(this, "The chickens have invaded! Game Over.");
+   			gameMain.switchScreen("menuScreen");
+			return;
+		}
+
 		//special enemy
 		if(!playerPlane.isFreezeBomb()){
 			for (Cell cell : grid) {
@@ -421,6 +456,8 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 			spawnGrid();
 		}
 		if(levels[currentLevel - 1].isBossLevel && currentBoss != null && !currentBoss.isAlive()){
+			gameMain.soundManager.playCrash();
+			
 			if(currentLevel == 4){
 				score += 500;
 			}
@@ -537,9 +574,11 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
         	// 	bullets.add(new Bullet(bulletX, bulletY));
             //     lastShotTime = currentTime;
             // }
+			if(!isPaused){
 			playerPlane.shootBullet(bullets);
 			gameMain.soundManager.playShoot();
-        }
+			}	
+		}
 		if (keyCode == KeyEvent.VK_P){
 			isPaused = !isPaused;
 			if(isPaused){
@@ -651,6 +690,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 		spawnGrid();
 		gameTimer.start();
 		currentBoss = null;
+		playerPlane.resetPowerups();
 	}
 
 	private Enemy createEnemy(String[] types, int health, int x, int y, int col){
