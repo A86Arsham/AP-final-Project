@@ -691,6 +691,10 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 		gameTimer.start();
 		currentBoss = null;
 		playerPlane.resetPowerups();
+		leftPressed = false;
+		rightPressed = false;
+		upPressed = false;
+		downPressed = false;
 	}
 
 	private Enemy createEnemy(String[] types, int health, int x, int y, int col){
