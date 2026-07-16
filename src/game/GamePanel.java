@@ -119,7 +119,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 				eggs.add(bossEggs.get(i));
 			}
 
-			if(currentBoss.getBounds().intersects(playerPlane.getBounds()) && System.currentTimeMillis() - lastTakenDamageTime > 2000){
+			if(!playerPlane.isShielded() && currentBoss.getBounds().intersects(playerPlane.getBounds()) && System.currentTimeMillis() - lastTakenDamageTime > 2000){
 				playerPlane.setLives(playerPlane.getLives() - 1);
 				if(playerPlane.getLives() <= 0){
 					gameTimer.stop();
@@ -295,9 +295,10 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 			if (hitEdge) {
 				lastEdgeHitTime = System.currentTimeMillis();
 				gridDirection *= -1;
+				int verticalStep = levels[currentLevel - 1].verticalMove;
 				for (int i = 0; i < grid.size(); i++) {
 					Cell cell = (Cell) grid.get(i);
-					cell.shift(0, 10);
+					cell.shift(0, verticalStep);
 					Enemy chicken = cell.getOccChicken();
 					if (chicken != null && chicken.isAlive()) {
 						chicken.setX(cell.getX());
@@ -582,6 +583,10 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 		if (keyCode == KeyEvent.VK_P){
 			isPaused = !isPaused;
 			if(isPaused){
+				leftPressed = false;
+				rightPressed = false;
+				upPressed = false;
+				downPressed = false;
 				gameTimer.stop();
 			}
 			else{
@@ -707,7 +712,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 			type = types[index];
 		}
 		else{
-			int index = col % 3;
+			int index = col % types.length;
 			type = types[index];
 		}
 

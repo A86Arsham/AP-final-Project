@@ -25,7 +25,7 @@ public class FailedRegisterPopup extends JPanel {
         popupBox.setPreferredSize(new Dimension(350, 150));
         popupBox.setBorder(BorderFactory.createLineBorder(new Color(0, 255, 255), 3));
         
-        JLabel titleLabel = new JLabel("REGISTRATION FAILER", JLabel.CENTER);
+        JLabel titleLabel = new JLabel("REGISTRATION FAILED", JLabel.CENTER);
         titleLabel.setForeground(new Color(57, 255, 20));
         titleLabel.setFont(new Font("Monospaced", Font.BOLD, 24));
         titleLabel.setBorder(BorderFactory.createEmptyBorder(10, 0, 0, 0));
