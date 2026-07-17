@@ -441,13 +441,15 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
     		b.move();
 		}	
 		
-		for(int i = 0; i<explosions.size(); i++){
+		//explosions
+		for (int i = explosions.size() - 1; i >= 0; i--) {
 			Explosion exp = explosions.get(i);
 			exp.updateFrame();
-			if(!exp.isVisible()){
+			if (!exp.isVisible()) {
 				explosions.remove(i);
 			}
 		}
+
 
 		//spawn level
 		if(!levels[currentLevel - 1].isBossLevel && grid.size() > 0 && isLevelComplete()){

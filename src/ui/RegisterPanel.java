@@ -64,7 +64,7 @@ public class RegisterPanel extends JPanel {
 			    String password = passwordField.getText().trim();
 			    usernameField.setText("");
 			    passwordField.setText("");
-			    if(username.isEmpty() || password.isEmpty() || gameMain.db.doesTheUserExist(username)) {
+			    if(username.isEmpty() || password.isEmpty() || username.contains(",") || password.contains(",") ||gameMain.db.doesTheUserExist(username)) {
 			    	gameMain.switchScreen("failedRegisterScreen");
 			    	return;
 			    }
