@@ -40,22 +40,22 @@ public class Egg {
 		eggImage = icon.getImage();
 	}
 
-	public Egg(int x, int y, int dx, int dy){
+	public Egg(int x, int y, int directionX, int directionY){
 		this.x = x;
 		this.y = y;
 		this.visible = true;
-		this.dx = dx * speed;
-		this.dy = dy * speed;
+		this.dx = directionX * speed;
+		this.dy = directionY * speed;
 
 		ImageIcon icon = new ImageIcon("assets/chicken/egg.png");
 		eggImage = icon.getImage();
 	}
 
-	public Egg(int x, int y, int dx, int dy, int speed){
+	public Egg(int x, int y, int directionX, int directionY, int speed){
 		this.x = x;
 		this.y = y;
-		this.dx = dx * speed;
-		this.dy = dy * speed;
+		this.dx = directionX * speed;
+		this.dy = directionY * speed;
 		this.visible = true;
 
 		ImageIcon icon = new ImageIcon("assets/chicken/egg.png");
