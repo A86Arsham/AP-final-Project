@@ -62,10 +62,4 @@ public class User {
 		return this.lastReachedLevel;
 	}
 
-	public boolean doesUserExists(String username) {
-		if(this.username.equals(username)) {
-			return true;
-		}
-		return false;
-	}
 }

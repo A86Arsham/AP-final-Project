@@ -181,33 +181,10 @@ public class DatabaseManager {
 		try(BufferedWriter bw = new BufferedWriter(new FileWriter(historyFileName, true))){
 			String date = java.time.LocalDateTime.now().toString();
 
-			String bg;
-			if (soundSettings != null) {
-				bg = String.valueOf(soundSettings.bgMusic);
-			} else {
-				bg = "true";
-			}
-
-			String shot;
-			if(soundSettings != null){
-				shot = String.valueOf(soundSettings.shotSound);
-			}else{
-				shot = "true";
-			}
-
-			String crash;
-			if(soundSettings != null){
-				crash = String.valueOf(soundSettings.crashSound);
-			}else{
-				crash = "true";
-			}
-
-			String end;
-			if(soundSettings != null){
-				end = String.valueOf(soundSettings.endSound);
-			}else{
-				end = "true";
-			}
+			String bg = String.valueOf(soundSettings.bgMusic);
+			String shot = String.valueOf(soundSettings.shotSound);
+			String crash = String.valueOf(soundSettings.crashSound);
+			String end = String.valueOf(soundSettings.endSound);
 
 			String line = username + "," + score + "," + level + "," + date + "," + bg + "," + shot + "," + crash + "," + end;
 
