@@ -24,13 +24,16 @@ public class BossLevel4 extends Boss {
     private long lastAttackTime = 0;
     private int attackCooldown = 1500;
 
-    private double currentY = getY();
+    private double currentY;
     private double verticalSpeed = 0.5;
     private int verticalDirection = 1;
-    private double startY = getY();
+    private double startY;
 
     public BossLevel4(){
         super(350, 50, 100, 100, 50, 1.5);
+
+        startY = getY();
+        currentY = getY();
 
         ImageIcon icon = new ImageIcon("assets/chicken/boss1.png");
         bossImage = icon.getImage();

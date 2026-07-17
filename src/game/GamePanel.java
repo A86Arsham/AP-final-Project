@@ -645,6 +645,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 		eggs.clear();
 		bullets.clear();
 		powerups.clear();
+		explosions.clear();
 		LevelConfig config = levels[currentLevel - 1];
 
 		if(config.isBossLevel){
