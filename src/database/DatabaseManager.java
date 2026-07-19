@@ -51,7 +51,7 @@ public class DatabaseManager {
 
 		try(BufferedWriter bw = new BufferedWriter(new FileWriter(usersFileName,true))){
 			
-			String[] user = {username, password, "0", "0", "true", "true", "true", "true"};
+			String[] user = {username, password, "0", "0", "true", "true", "true", "true", "Default"};
 			bw.write(String.join(",", user));
             bw.newLine();
 			
@@ -84,6 +84,10 @@ public class DatabaseManager {
 					userSounds.shotSound = shot;
 					userSounds.crashSound = crash;
 					userSounds.endSound = end;
+					
+					String type = tokens[8];
+					newUser.setType(type);
+
 					newUser.setSoundsSetting(userSounds);
 
 					return newUser;
@@ -129,7 +133,7 @@ public class DatabaseManager {
 					String crash = String.valueOf(sm.crashSound);
 					String end = String.valueOf(sm.endSound);
 
-					String updatedLine = user.getUsername() + "," + user.getPassword() + "," + user.getHighestScore() + "," + user.getLastReachedLevel() + "," + bg + "," + shot + "," + crash + "," + end;
+					String updatedLine = user.getUsername() + "," + user.getPassword() + "," + user.getHighestScore() + "," + user.getLastReachedLevel() + "," + bg + "," + shot + "," + crash + "," + end + "," + user.getType();
 					lines.add(updatedLine);
 				}
 				else{

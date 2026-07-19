@@ -77,7 +77,15 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 		setBackground(Color.BLACK);
 		setFocusable(true);
 		addKeyListener(this);
-		playerPlane = new Plane();
+		
+		String planeType;
+		if(gameMain.currentUser != null){
+			planeType = gameMain.currentUser.getType();
+		}else{
+			planeType = "Default";
+		}	
+		
+		playerPlane = new Plane(planeType);
 		gameTimer = new Timer(16,this);
     	gameStartTime = System.currentTimeMillis();
 		lastTakenDamageTime = System.currentTimeMillis();
@@ -270,7 +278,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 
 			if(currentBoss != null && currentBoss.isAlive()){
 				if(b.isVisible() && b.getBounds().intersects(currentBoss.getBounds())){
-					currentBoss.takeDamage(1);
+					currentBoss.takeDamage(playerPlane.bossDamage());
 					b.destroy();
 				}
 			}
@@ -502,7 +510,9 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 		else{
 			brush.drawImage(normalBackgroundImage, 0, 0, getWidth(), getHeight(), null);
 		}
+
         playerPlane.draw(brush);
+
         for(Cell cell : grid){
 			Enemy chicken = cell.getOccChicken();
 			if(chicken != null && chicken.isAlive()){
@@ -687,8 +697,14 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 	public void resetGame() {
 		score = 0;
 		currentLevel = 1;
-		playerPlane.setMaxLives(3);
-		playerPlane.setLives(3);
+		String planeType;
+		if(gameMain.currentUser != null){
+			planeType = gameMain.currentUser.getType();
+		}else{
+			planeType = "Default";
+		}
+		playerPlane = new Plane(planeType);
+
 		playerPlane.respawn();
 		bullets.clear();
 		eggs.clear();

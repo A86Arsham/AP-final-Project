@@ -25,7 +25,7 @@ public class MainMenu extends JPanel{
 
 			JPanel mainPanel = new JPanel();
 			mainPanel.setSize(800,600);
-			GridLayout gridLayout = new GridLayout(6, 1, 0, 10);
+			GridLayout gridLayout = new GridLayout(7, 1, 0, 10);
 			mainPanel.setBorder(BorderFactory.createEmptyBorder(0, 0, 50, 0));
 			mainPanel.setBackground(new Color(5, 5, 15));
 			mainPanel.setLayout(gridLayout);
@@ -78,6 +78,16 @@ public class MainMenu extends JPanel{
 			howToPlayButton.setFocusPainted(false);
 			mainPanel.add(howToPlayButton);
 
+			JButton storeButton = new JButton("STORE");
+			storeButton.setFont(new Font("Monospaced", Font.BOLD, 24));
+			storeButton.setOpaque(true);
+			storeButton.setBackground(new Color(10, 10, 30));
+			storeButton.setForeground(new Color(0, 255, 255));
+			storeButton.setBorderPainted(true);
+			storeButton.setBorder(BorderFactory.createLineBorder(new Color(0, 255, 255), 2));
+			storeButton.setFocusPainted(false);
+			mainPanel.add(storeButton);
+
 			JButton exitButton = new JButton("EXIT");
 			exitButton.setFont(new Font("Monospaced", Font.BOLD, 24));
 			exitButton.setOpaque(true);
@@ -114,6 +124,13 @@ public class MainMenu extends JPanel{
 				@Override
 				public void actionPerformed(ActionEvent e){
 					gameMain.switchScreen("howToPlayScreen");
+				}
+			});
+
+			storeButton.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e){
+					gameMain.switchScreen("storeScreen");
 				}
 			});
 

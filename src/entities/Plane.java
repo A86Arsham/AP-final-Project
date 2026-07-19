@@ -43,19 +43,55 @@ public class Plane {
 
     private Image shipImage;
 
-    public Plane() {
+    private String planeType;
+
+    public Plane(String type) {
         this.width = 60;
         this.height = 60;
         this.x = 375;
         this.y = 500;
-        this.speed = 5;
-        this.lives = 3;
-        this.maxLives = 3;
         this.bulletAmount = 1;
-        this.bulletShootCooldown = 300;
+        this.planeType = type;
 
-        ImageIcon icon = new ImageIcon("assets/airplan/1.png");
-        shipImage = icon.getImage();
+        ImageIcon icon;
+        switch(planeType){
+            case "Fast":
+                this.speed = 7;
+                this.lives = 3;
+                this.maxLives = 3;
+                this.bulletShootCooldown = 250;
+                icon = new ImageIcon("assets/airplan/2.png");
+                shipImage = icon.getImage();
+                break;
+            case "Heavy":
+                this.speed = 4;
+                this.lives = 5;
+                this.maxLives = 5;
+                this.bulletShootCooldown = 200;
+                icon = new ImageIcon("assets/airplan/3.png");
+                shipImage = icon.getImage();
+                break;
+            case "Sniper":
+                this.speed = 5;
+                this.lives = 3;
+                this.maxLives = 3;
+                this.bulletShootCooldown = 150;
+                icon = new ImageIcon("assets/airplan/5.png");
+                shipImage = icon.getImage();
+                break;
+            default:
+                this.speed = 5;
+                this.lives = 3;
+                this.maxLives = 3;
+                this.bulletShootCooldown = 300;
+                icon = new ImageIcon("assets/airplan/1.png");
+                shipImage = icon.getImage();
+                break;
+
+        }
+
+
+        
     }
 
     public void move(boolean left, boolean right, boolean up, boolean down, int screenWidth, int screenHeight) {
@@ -178,11 +214,18 @@ public class Plane {
         this.freezeBombStartTime = System.currentTimeMillis();
     }
 
-
     public Rectangle getBounds() {
         return new Rectangle(x, y, width, height);
     }
     
+    public int bossDamage(){
+        switch(planeType){
+            case "Sniper":
+                return 2;
+            default:
+                return 1;
+        }
+    }
     public void respawn() {
         this.x = 375; 
         this.y = 500;
@@ -207,7 +250,20 @@ public class Plane {
 
         if(isRapidFireOn && (currentTime - rapidFireStartTime > rapidFireDuration)){
             isRapidFireOn = false;
-            this.bulletShootCooldown = 300;
+            switch(planeType){
+                case "Fast":
+                    this.bulletShootCooldown = 250;
+                    break;
+                case "Heavy":
+                    this.bulletShootCooldown = 200;
+                    break;
+                case "Sniper":
+                    this.bulletShootCooldown = 150;
+                    break;
+                default:
+                    this.bulletShootCooldown = 300;
+                    break;
+            }
         }
 
         if(isShieldOn && (currentTime - shieldStartTime > shieldDuration)){
@@ -224,6 +280,19 @@ public class Plane {
         isRapidFireOn = false;
         isFreezeBombOn = false;
         bulletAmount = 1;
-        bulletShootCooldown = 300;
+        switch(planeType){
+                case "Fast":
+                    this.bulletShootCooldown = 250;
+                    break;
+                case "Heavy":
+                    this.bulletShootCooldown = 200;
+                    break;
+                case "Sniper":
+                    this.bulletShootCooldown = 150;
+                    break;
+                default:
+                    this.bulletShootCooldown = 300;
+                    break;
+            }
     }
 }

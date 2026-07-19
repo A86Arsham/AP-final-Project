@@ -55,6 +55,9 @@ public class GameMain{
 		HowToPlayPanel howToPlayPanel = new HowToPlayPanel(this);
 		screens.add(howToPlayPanel, "howToPlayScreen");
 
+		StorePanel storePanel = new StorePanel(this);
+		screens.add(storePanel, "storeScreen");
+		
 		gamePanel = new GamePanel(this);
 		screens.add(gamePanel, "gameScreen");
 		

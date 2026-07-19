@@ -18,6 +18,7 @@ public class User {
 	private int highestScore;
 	private SoundManager soundsSetting;
 	private int lastReachedLevel;
+	private String type;
 
 	public User(String username, String password) {
 		this.username = username;
@@ -25,6 +26,7 @@ public class User {
 		this.highestScore = 0;
 		this.lastReachedLevel = 0;
 		this.soundsSetting = null;
+		this.type = "Default";
 	}
 
 	public void setUsername(String newUsername) {
@@ -60,6 +62,13 @@ public class User {
 	}
 	public int getLastReachedLevel() {
 		return this.lastReachedLevel;
+	}
+
+	public void setType(String type){
+		this.type = type;
+	}
+	public String getType(){
+		return this.type;
 	}
 
 }
