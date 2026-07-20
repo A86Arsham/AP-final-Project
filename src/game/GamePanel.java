@@ -63,13 +63,13 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 	boolean isPaused = false;
 
 	LevelConfig[] levels = {
-		new LevelConfig(new String[]{"Normal"}, 2, 1.0, 20, 3000, false),
-		new LevelConfig(new String[]{"Normal", "Fast"}, 2, 1.5, 20, 2000, false),
-		new LevelConfig(new String[]{"Normal", "Zigzag"}, 3, 2.0, 25, 1500, false),
+		new LevelConfig(new String[]{"Normal"}, 2, 1.0, 10, 3000, false),
+		new LevelConfig(new String[]{"Normal", "Fast"}, 2, 1.5, 10, 2000, false),
+		new LevelConfig(new String[]{"Normal", "Zigzag"}, 3, 2.0, 10, 1500, false),
 		new LevelConfig(null, 0, 1.5, 0, 1500, true),
-		new LevelConfig(new String[]{"Shooter", "Fast"}, 3, 2.5, 25, 1000, false),
-		new LevelConfig(new String[]{"Zigzag", "Shooter"}, 4, 3.0, 30, 800, false),
-		new LevelConfig(new String[]{"Normal", "Fast", "Zigzag", "Shooter"}, 4, 3.5, 30, 700, false),
+		new LevelConfig(new String[]{"Shooter", "Fast"}, 3, 2.5, 10, 1000, false),
+		new LevelConfig(new String[]{"Zigzag", "Shooter"}, 4, 3.0, 10, 800, false),
+		new LevelConfig(new String[]{"Normal", "Fast", "Zigzag", "Shooter"}, 4, 3.5, 10, 700, false),
 		new LevelConfig(null, 0, 2.0, 0, 1000, true)
 	};
 
